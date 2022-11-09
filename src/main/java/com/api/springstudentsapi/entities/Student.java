@@ -1,21 +1,29 @@
 package com.api.springstudentsapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Entity
 public class Student {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(
+            name = "studentIdGenerator",
+            sequenceName = "studentSequennce",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "studentIdGenerator"
+    )
     private Long id;
     private String name;
 
     @ManyToMany(mappedBy = "enrolledStudents")
-    private Set<Course> courses = new HashSet<>();
+    @JsonManagedReference
+    private Collection<Course> courses = new LinkedList<>();
 
     public Student(String name) {
         this.name = name;
@@ -38,7 +46,7 @@ public class Student {
     public void setName(String name) {this.name = name;}
 
     // courses
-    public Set<Course> getCourses() {return courses;}
+    public Collection<Course> getCourses() {return courses;}
     public void setCourses(Set<Course> courses) {this.courses = courses;}
 
     @Override

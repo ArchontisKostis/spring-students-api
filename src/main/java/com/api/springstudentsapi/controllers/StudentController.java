@@ -37,8 +37,7 @@ public class StudentController {
             @PathVariable Long studentId,
             @RequestParam String newName
     ) {
-        Student student = studentService.getStudentById(studentId);
-        studentService.updateStudentById(student, newName);
+        studentService.updateStudentById(studentId, newName);
     }
 
 }

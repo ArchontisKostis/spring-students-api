@@ -43,8 +43,15 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public void updateStudentById(Student studentToUpdate, String newName) {
-        studentToUpdate.setName(newName);
+    public void updateStudentById(Long id, String newName) {
+        Optional<Student> studentOptional = studentRepository.findById(id);
+
+        if (!studentOptional.isPresent())
+            throw new RuntimeException("Student not found in database. ID: " + id);
+
+        Student student = studentOptional.get();
+        student.setName(newName);
+        studentRepository.save(student);
     }
 
 }

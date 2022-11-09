@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -41,16 +42,33 @@ class StudentServiceTest {
     }
 
     @Test
-    void getStudentById() {
+    void shouldGetStudentById() {
         // Given
         Student student = new Student(1L,"Archo");
-        studentRepository.save(student);
+
+        given(studentRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(student));
 
         // When
         Student resultStudent = classUnderTest.getStudentById(1L);
 
         // Then
         assertThat(resultStudent.getId()).isEqualTo(student.getId());
+    }
+
+    @Test
+    void shouldThrowWhenNotFoundInGetStudentId() {
+        // Given
+        Student student = new Student(1L,"Archo");
+
+        given(studentRepository.findById(any(Long.class)))
+                .willReturn(Optional.empty());
+
+        // When
+        // Then
+        assertThatThrownBy(() -> classUnderTest.getStudentById(1L))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Student not found in database. ID: " + 1L);
     }
 
     @Test
@@ -69,7 +87,7 @@ class StudentServiceTest {
                 .save(studentCaptor.capture());
 
         Student capturedStudent = studentCaptor.getValue();
-        assertThat(student).isEqualTo(capturedStudent);
+        assertThat(capturedStudent).isEqualTo(student);
     }
 
     @Test
@@ -94,7 +112,63 @@ class StudentServiceTest {
     }
 
     @Test
-    @Disabled
+    void shouldTrowOnDeleteStudentById() {
+        // Given
+        Student student = new Student(1L, "Archo");
+
+        given(studentRepository.existsById(any(Long.class)))
+                .willReturn(false);
+        // When
+        // Then
+        assertThatThrownBy(() -> classUnderTest.deleteStudentById(1L))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Student to delete not found");
+    }
+
+    @Test
     void updateStudentById() {
+        // Given
+        Student student = new Student(1L, "Archo");
+        String newName = "George";
+
+        given(studentRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(student));
+
+        // When
+        classUnderTest.updateStudentById(1L, newName);
+
+        // Then
+        ArgumentCaptor<Long> givenIdCaptor =
+                ArgumentCaptor.forClass(Long.class);
+
+        ArgumentCaptor<Student> studentCaptor =
+                ArgumentCaptor.forClass(Student.class);
+
+        verify(studentRepository)
+                .findById(givenIdCaptor.capture());
+
+        verify(studentRepository)
+                .save(studentCaptor.capture());
+
+        // Make sure we find the student with the correct id
+        Long capturedId = givenIdCaptor.getValue();
+        assertThat(capturedId).isEqualTo(student.getId());
+        // Make sure that the name is updated when we save to the database
+        Student capturedStudent = studentCaptor.getValue();
+        assertThat(newName).isEqualTo(capturedStudent.getName());
+    }
+
+    @Test
+    void shouldThrowWhenStudentNotFoundInUpdate(){
+        // Given
+        Student student = new Student(1L, "Archo");
+
+        given(studentRepository.findById(any(Long.class)))
+                .willReturn(Optional.empty());
+
+        // Then
+        assertThatThrownBy(() -> classUnderTest.updateStudentById(1L, "new name"))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("Student not found in database. ID: " + 1L);
     }
 }
