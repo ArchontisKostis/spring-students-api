@@ -2,6 +2,7 @@ package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.entities.Teacher;
+import com.api.springstudentsapi.exceptions.TeacherNotFoundException;
 import com.api.springstudentsapi.repositories.TeacherRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,8 +13,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class TeacherServiceTest {
@@ -57,5 +63,37 @@ class TeacherServiceTest {
 
         Teacher capturedTeacher = teacherCaptor.getValue();
         assertThat(capturedTeacher).isEqualTo(teacher);
+    }
+
+    @Test
+    void shouldGetTeacherById() {
+        // Given
+        Teacher teacher = new Teacher(1L, "John");
+
+        given(teacherRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(teacher));
+
+        // When
+        Teacher foundTeacher = classUnderTest.getTeacherById(1L);
+
+        // Then
+        assertThat(foundTeacher).isEqualTo(teacher);
+
+    }
+
+    @Test
+    void shouldThrowOnGetTeacherById() {
+        // Given
+        Teacher teacher = new Teacher(1L, "John");
+
+        given(teacherRepository.findById(any(Long.class)))
+                .willReturn(Optional.empty());
+
+        // When
+        // Then
+        assertThatThrownBy(() -> classUnderTest.getTeacherById(1L))
+                .isInstanceOf(TeacherNotFoundException.class)
+                .hasMessageContaining("Did not find Teacher.");
+
     }
 }

@@ -5,7 +5,7 @@ import com.api.springstudentsapi.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -17,15 +17,11 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<Course> getAllCourses() {
+    public Collection<Course> getAllCourses() {
         return this.courseRepository.findAll();
     }
 
-    public Course addCourse(Course aCourse) {
-        return this.courseRepository.save(aCourse);
-    }
-
-    public Course findCourseById(Long id) {
+    public Course getCourseById(Long id) {
         Optional<Course> courseOptional = courseRepository.findById(id);
 
         if (!courseOptional.isPresent())
@@ -34,4 +30,9 @@ public class CourseService {
         Course foundCourse = courseOptional.get();
         return foundCourse;
     }
+
+    public Course addCourse(Course aCourse) {
+        return this.courseRepository.save(aCourse);
+    }
+
 }

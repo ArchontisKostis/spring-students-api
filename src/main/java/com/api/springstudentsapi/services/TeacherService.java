@@ -1,11 +1,13 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Teacher;
+import com.api.springstudentsapi.exceptions.TeacherNotFoundException;
 import com.api.springstudentsapi.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherService {
@@ -18,6 +20,16 @@ public class TeacherService {
 
     public List<Teacher> getAllTeachers() {
         return this.teacherRepository.findAll();
+    }
+
+    public Teacher getTeacherById(Long anId) {
+        Optional<Teacher> teacherOptional = teacherRepository.findById(anId);
+
+        if(teacherOptional.isEmpty())
+            throw new TeacherNotFoundException("Did not find Teacher.");
+
+        Teacher foundTeacher = teacherOptional.get();
+        return foundTeacher;
     }
 
     public Teacher addTeacher(Teacher teacher) {

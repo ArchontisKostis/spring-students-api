@@ -19,7 +19,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class CourseServiceTest {
     @Mock
@@ -75,7 +74,7 @@ class CourseServiceTest {
                 .willReturn(Optional.of(course));
 
         // When
-        Course foundCourse = classUnderTest.findCourseById(1L);
+        Course foundCourse = classUnderTest.getCourseById(1L);
 
         // Then
         assertThat(foundCourse).isEqualTo(course);
@@ -91,7 +90,7 @@ class CourseServiceTest {
                 .willReturn(Optional.empty());
 
         // Then
-        assertThatThrownBy(() -> classUnderTest.findCourseById(1L))
+        assertThatThrownBy(() -> classUnderTest.getCourseById(1L))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("Course not found in database. ID: " + 1L);
 
