@@ -2,6 +2,7 @@ package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.repositories.CourseRepository;
+import com.api.springstudentsapi.repositories.RegistrationRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,11 +25,12 @@ class CourseServiceTest {
     @Mock
     CourseRepository courseRepository;
     CourseService classUnderTest;
+    RegistrationRepository registrationRepository;
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
         System.out.println("----- Test " + testInfo.getDisplayName() + " Started -----");
-        classUnderTest = new CourseService(courseRepository);
+        classUnderTest = new CourseService(courseRepository, registrationRepository);
     }
 
     @AfterEach

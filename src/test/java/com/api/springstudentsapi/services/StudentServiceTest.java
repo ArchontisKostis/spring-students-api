@@ -1,6 +1,7 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Student;
+import com.api.springstudentsapi.repositories.RegistrationRepository;
 import com.api.springstudentsapi.repositories.StudentRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,11 +22,13 @@ class StudentServiceTest {
     @Mock
     StudentRepository studentRepository;
     StudentService classUnderTest;
+    RegistrationRepository registrationRepository;
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
         System.out.println("----- Test " + testInfo.getDisplayName() + " Started -----");
-        classUnderTest = new StudentService(studentRepository);
+
+        classUnderTest = new StudentService(studentRepository, registrationRepository);
     }
 
     @AfterEach
@@ -74,7 +77,7 @@ class StudentServiceTest {
     @Test
     void shouldAddStudent() {
         // Given
-        Student student = new Student("Archontis");
+        Student student = new Student(1L, "Archontis");
 
         // When
         classUnderTest.addStudent(student);

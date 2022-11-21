@@ -24,5 +24,10 @@ public class Registration {
     private Course course;
 
     @Getter @Setter
-    private Long grade;
+    private int grade;
+
+    public void register() {
+        this.student.addRegistration(this);
+        this.course.addRegistration(this);
+    }
 }

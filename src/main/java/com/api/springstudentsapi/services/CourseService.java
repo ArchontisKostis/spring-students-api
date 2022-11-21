@@ -2,6 +2,7 @@ package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.repositories.CourseRepository;
+import com.api.springstudentsapi.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,12 @@ import java.util.Optional;
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final RegistrationRepository registrationRepository;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, RegistrationRepository registrationRepository) {
         this.courseRepository = courseRepository;
+        this.registrationRepository = registrationRepository;
     }
 
     public Collection<Course> getAllCourses() {

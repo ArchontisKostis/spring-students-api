@@ -41,27 +41,5 @@ public class CourseController {
         return this.courseService.addCourse(aCourse);
     }
 
-    @PutMapping("enrollStudent/course/{courseId}/student/{studentId}")
-    Course enrollStudentToCourse(
-            @PathVariable Long courseId,
-            @PathVariable Long studentId
-    ){
-        Course course = courseService.getCourseById(courseId);
-        Student student = studentService.getStudentById(studentId);
-        course.enrollStudent(student);
 
-        return courseService.addCourse(course);
-    }
-
-//    @PutMapping("enrollStudent/course/{courseId}/teacher/{teacherId}")
-//    Course addTeacherToCourse(
-//            @PathVariable Long courseId,
-//            @PathVariable Long teacherId
-//    ){
-//        Course course = courseService.getCourseById(courseId);
-//        Teacher teacher = teacherService.getStudentById(teacherId);
-//        course.enrollStudent(student);
-//
-//        return courseService.addCourse(course);
-//    }
 }
