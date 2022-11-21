@@ -2,10 +2,7 @@ package com.api.springstudentsapi.entities;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @ToString
 @EqualsAndHashCode
@@ -19,10 +16,12 @@ public class Registration {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name="course_id", nullable=false)
     @Getter @Setter
     private Course course;
 
     @ManyToOne
+    @JoinColumn(name="student_id", nullable=false)
     @Getter @Setter
     private Student student;
 
