@@ -23,11 +23,8 @@ public class RegistrationService {
         return registrationRepository.findAll();
     }
 
-    public Registration registerStudentToCourse(
-            @PathVariable Student student,
-            @PathVariable Course course){
-        Registration reg = new Registration(1L, student, course, 0);
-
-        return registrationRepository.save(reg);
+    public Registration registerStudentToCourse(Student student, Course course) {
+        Registration registration = new Registration(student, course);
+        return registrationRepository.save(registration);
     }
 }

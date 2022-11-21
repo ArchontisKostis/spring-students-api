@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedList;
 
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class Course {
     @Id
@@ -26,16 +28,8 @@ public class Course {
     @Getter @Setter
     private String name;
 
-    @OneToMany(targetEntity = Registration.class, mappedBy = "student")
+    @OneToMany(mappedBy = "student")
     @Getter @Setter
     private Collection<Registration> registrations = new LinkedList<>();
 
-    public Course(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public void addRegistration(Registration registration){
-        this.registrations.add(registration);
-    }
 }

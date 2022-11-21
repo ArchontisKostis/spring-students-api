@@ -12,6 +12,7 @@ import java.util.LinkedList;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class Student {
     @Id
@@ -29,16 +30,12 @@ public class Student {
     @Getter @Setter
     private String name;
 
-    @OneToMany(targetEntity = Registration.class, mappedBy = "course")
+    @OneToMany(targetEntity = Registration.class, mappedBy = "student")
     @Getter @Setter
     private Collection<Registration> registrations = new LinkedList<>();
 
     public Student(Long id , String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public void addRegistration(Registration registration) {
-        this.registrations.add(registration);
     }
 }

@@ -7,10 +7,7 @@ import com.api.springstudentsapi.services.CourseService;
 import com.api.springstudentsapi.services.RegistrationService;
 import com.api.springstudentsapi.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -28,14 +25,10 @@ public class RegistrationController {
         this.courseService = courseService;
     }
 
-    @GetMapping
-    public Collection<Registration> getRegistrations(){ return this.registrationService.getRegistrations();}
-
-    @PutMapping
-    public Registration registerStudentToCourse() {
-        Student student = studentService.getStudentById(1L);
-        Course course = courseService.getCourseById(1L);
-
-       return registrationService.registerStudentToCourse(student, course);
+    @PutMapping(path = "register/student/{studentId}/course/{courseId}")
+    public Registration registerStudentToCourse(@PathVariable Long studentId, @PathVariable Long courseId){
+        Course foundCourse = courseService.getCourseById(courseId);
+        Student foundStudent = studentService.getStudentById(studentId);
+        return registrationService.registerStudentToCourse(foundStudent, foundCourse);
     }
 }
