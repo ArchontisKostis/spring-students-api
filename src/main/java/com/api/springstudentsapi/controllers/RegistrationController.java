@@ -26,9 +26,9 @@ public class RegistrationController {
     }
 
     @PutMapping(path = "register/student/{studentId}/course/{courseId}")
-    public Registration registerStudentToCourse(@PathVariable Long studentId, @PathVariable Long courseId){
+    public void registerStudentToCourse(@PathVariable Long studentId, @PathVariable Long courseId){
         Course foundCourse = courseService.getCourseById(courseId);
         Student foundStudent = studentService.getStudentById(studentId);
-        return registrationService.registerStudentToCourse(foundStudent, foundCourse);
+        registrationService.registerStudentToCourse(foundStudent, foundCourse);
     }
 }

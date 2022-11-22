@@ -1,5 +1,7 @@
 package com.api.springstudentsapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,14 +33,5 @@ public class Registration {
     public Registration(Student student, Course course) {
         this.student = student;
         this.course = course;
-    }
-
-    @Override
-    public String toString() {
-        return "Registration{" +
-                "id=" + id +
-                ", course=" + course +
-                ", grade=" + grade +
-                '}';
     }
 }

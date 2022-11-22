@@ -1,8 +1,10 @@
 package com.api.springstudentsapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @ToString
 @AllArgsConstructor
@@ -21,7 +23,6 @@ public class Student {
             generator = "studentIdGenerator"
     )
     @Getter @Setter
-    @Column(name = "student_id")
     private Long id;
     @Getter @Setter
     private String name;
