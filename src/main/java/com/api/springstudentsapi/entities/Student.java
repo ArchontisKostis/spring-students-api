@@ -1,13 +1,8 @@
 package com.api.springstudentsapi.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.Set;
 
 @ToString
 @AllArgsConstructor
@@ -26,13 +21,14 @@ public class Student {
             generator = "studentIdGenerator"
     )
     @Getter @Setter
+    @Column(name = "student_id")
     private Long id;
     @Getter @Setter
     private String name;
 
-    @OneToMany(targetEntity = Registration.class, mappedBy = "student")
+    @OneToMany(mappedBy = "student")
     @Getter @Setter
-    private Collection<Registration> registrations = new LinkedList<>();
+    private Set<Registration> registrations;
 
     public Student(Long id , String name) {
         this.id = id;
