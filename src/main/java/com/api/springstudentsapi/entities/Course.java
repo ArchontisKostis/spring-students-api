@@ -1,11 +1,9 @@
 package com.api.springstudentsapi.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.Set;
 
 @ToString
 @AllArgsConstructor
@@ -30,6 +28,10 @@ public class Course {
 
     @OneToMany(mappedBy = "student")
     @Getter @Setter
-    private Collection<Registration> registrations = new LinkedList<>();
-
+    private Set<Registration> registrations;
+    
+    public Course(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
