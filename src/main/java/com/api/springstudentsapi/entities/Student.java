@@ -29,7 +29,7 @@ public class Student {
 
     @OneToMany(mappedBy = "student")
     @Getter @Setter
-    private Set<Registration> registrations;
+    private Set<Registration> studentRegistrations;
 
     public Student(Long id , String name) {
         this.id = id;

@@ -1,6 +1,5 @@
 package com.api.springstudentsapi.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,9 +26,9 @@ public class Course {
     @Getter @Setter
     private String name;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "course")
     @Getter @Setter
-    private Set<Registration> registrations;
+    private Set<Registration> courseRegistrations;
     
     public Course(Long id, String name) {
         this.id = id;

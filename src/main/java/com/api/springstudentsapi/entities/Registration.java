@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 public class Registration {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
     private Long id;
 
