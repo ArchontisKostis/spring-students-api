@@ -1,7 +1,7 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Teacher;
-import com.api.springstudentsapi.exceptions.TeacherNotFoundException;
+import com.api.springstudentsapi.exceptions.teacher.TeacherNotFoundException;
 import com.api.springstudentsapi.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

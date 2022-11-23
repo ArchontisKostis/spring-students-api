@@ -1,6 +1,7 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Course;
+import com.api.springstudentsapi.exceptions.course.CourseNotFoundException;
 import com.api.springstudentsapi.repositories.CourseRepository;
 import com.api.springstudentsapi.repositories.RegistrationRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -93,7 +94,7 @@ class CourseServiceTest {
 
         // Then
         assertThatThrownBy(() -> classUnderTest.getCourseById(1L))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(CourseNotFoundException.class)
                 .hasMessageContaining("Course not found in database. ID: " + 1L);
 
     }

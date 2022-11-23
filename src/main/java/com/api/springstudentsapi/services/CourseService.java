@@ -1,6 +1,8 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Course;
+import com.api.springstudentsapi.exceptions.course.CourseNotFoundException;
+import com.api.springstudentsapi.exceptions.teacher.TeacherNotFoundException;
 import com.api.springstudentsapi.repositories.CourseRepository;
 import com.api.springstudentsapi.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class CourseService {
         Optional<Course> courseOptional = courseRepository.findById(id);
 
         if (!courseOptional.isPresent())
-            throw new RuntimeException("Course not found in database. ID: " + id);
+            throw new CourseNotFoundException("Course not found in database. ID: " + id);
 
         Course foundCourse = courseOptional.get();
         return foundCourse;
