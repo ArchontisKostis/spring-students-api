@@ -1,5 +1,6 @@
 package com.api.springstudentsapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class Course {
     private String name;
 
     @OneToMany(mappedBy = "course")
+    @JsonIgnore
     @Getter @Setter
     private Set<Registration> courseRegistrations;
     
