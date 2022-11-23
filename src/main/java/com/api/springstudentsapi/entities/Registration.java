@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,5 +32,13 @@ public class Registration {
     public Registration(Student student, Course course) {
         this.student = student;
         this.course = course;
+    }
+
+    @Override
+    public String toString() {
+        return "Registration{" +
+                "Course: " + course.getName() +
+                " Grade: " + grade +
+                '}';
     }
 }
