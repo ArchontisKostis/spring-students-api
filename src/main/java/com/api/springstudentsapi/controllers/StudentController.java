@@ -22,8 +22,10 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
-    @GetMapping(path = "/{studentId}")
-    public Student getStudentById(@PathVariable Long studentId) { return studentService.getStudentById(studentId); }
+    @GetMapping(path = "getStudent")
+    public Student getStudentById(
+            @RequestParam(name = "sid") Long studentId
+    ) { return studentService.getStudentById(studentId); }
 
     @PostMapping
     public Student createStudent(@RequestBody Student student){
@@ -35,10 +37,10 @@ public class StudentController {
         this.studentService.deleteStudentById(id);
     }
 
-    @PutMapping(path = "delete/{studentId}")
+    @PutMapping(path = "update")
     public void updateStudent(
-            @PathVariable Long studentId,
-            @RequestParam String newName
+            @RequestParam(name = "sid") Long studentId,
+            @RequestParam(name = "newName") String newName
     ) {
         studentService.updateStudentById(studentId, newName);
     }

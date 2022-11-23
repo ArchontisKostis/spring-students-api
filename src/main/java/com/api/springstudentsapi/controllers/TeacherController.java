@@ -23,8 +23,8 @@ public class TeacherController {
         return this.teacherService.getAllTeachers();
     }
 
-    @GetMapping(path = "teacherId={teacherId}")
-    public Teacher getTeacherById(@PathVariable Long teacherId) {
+    @GetMapping(path = "getTeacher")
+    public Teacher getTeacherById(@RequestParam(name = "tid") Long teacherId) {
         return teacherService.getTeacherById(teacherId);
     }
 

@@ -31,8 +31,10 @@ public class CourseController {
         return this.courseService.getAllCourses();
     }
 
-    @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
-    public Course getCourseById(@PathVariable Long courseId){
+    @RequestMapping(value = "getCourse", method = RequestMethod.GET)
+    public Course getCourseById(
+            @RequestParam(name = "cid") Long courseId
+    ){
         return this.courseService.getCourseById(courseId);
     }
 
