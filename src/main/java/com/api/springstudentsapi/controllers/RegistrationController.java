@@ -24,10 +24,8 @@ public class RegistrationController {
     
     @PostMapping(path = "register")
     public void registerStudentToCourse(@RequestParam(name = "student") Long studentId, @RequestParam(name = "course") Long courseId) {
-        // This belongs in the service layer
         Course foundCourse = courseService.getCourseById(courseId);
         Student foundStudent = studentService.getStudentById(studentId);
-        //
 
         registrationService.registerStudentToCourse(foundStudent, foundCourse);
     }
