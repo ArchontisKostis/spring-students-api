@@ -132,4 +132,44 @@ class TeacherServiceTest {
                 .isInstanceOf(TeacherNotFoundException.class)
                 .hasMessageContaining("Teacher not found.");
     }
+
+    @Test
+    void shouldUpdateTeacherById() {
+        // Given
+        Teacher teacherToUpdate = new Teacher(1L, "Jogn");
+        String newName = "John";
+
+        given(teacherRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(teacherToUpdate));
+
+        // When
+        classUnderTest.updateTeacher(1L, newName);
+
+        // Then
+        ArgumentCaptor<Teacher> teacherCaptor =
+                ArgumentCaptor.forClass(Teacher.class);
+
+        verify(teacherRepository)
+                .save(teacherCaptor.capture());
+
+        Teacher capturedTeacher = teacherCaptor.getValue();
+
+        assertThat(newName).isEqualTo(capturedTeacher.getName());
+    }
+
+    @Test
+    void shouldThrowOnUpdateTeacherById() {
+        // Given
+        Teacher teacherToUpdate = new Teacher(1L, "Jogn");
+        String newName = "John";
+
+        given(teacherRepository.findById(any(Long.class)))
+                .willReturn(Optional.empty());
+
+        // When
+        // Then
+        assertThatThrownBy(() -> classUnderTest.updateTeacher(1L, newName))
+                .isInstanceOf(TeacherNotFoundException.class)
+                .hasMessageContaining("Teacher not found.");
+    }
 }

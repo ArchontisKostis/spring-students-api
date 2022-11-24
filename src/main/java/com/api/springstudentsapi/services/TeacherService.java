@@ -40,4 +40,10 @@ public class TeacherService {
         Teacher teacherToDelete = getTeacherById(id);
         teacherRepository.delete(teacherToDelete);
     }
+
+    public void updateTeacher(Long id, String newName) {
+        Teacher teacherToUpdate = getTeacherById(id);
+        teacherToUpdate.setName(newName);
+        this.teacherRepository.save(teacherToUpdate);
+    }
 }
