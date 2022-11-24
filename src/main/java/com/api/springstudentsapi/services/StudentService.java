@@ -1,7 +1,7 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Student;
-import com.api.springstudentsapi.exceptions.student.StudentNotFound;
+import com.api.springstudentsapi.exceptions.student.StudentNotFoundException;
 import com.api.springstudentsapi.repositories.RegistrationRepository;
 import com.api.springstudentsapi.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class StudentService {
     }
 
     public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFound("Student with id: " + id + " not found in database."));
+        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id: " + id + " not found in database."));
     }
 
     public Student addStudent(Student aStudent) {
@@ -36,7 +36,7 @@ public class StudentService {
         boolean idExists = studentRepository.existsById(id);
 
         if (!idExists)
-            throw new StudentNotFound("Student to delete not found");
+            throw new StudentNotFoundException("Student to delete not found");
         studentRepository.deleteById(id);
     }
 
