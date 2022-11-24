@@ -1,8 +1,6 @@
 package com.api.springstudentsapi.controllers;
 
 import com.api.springstudentsapi.entities.Course;
-import com.api.springstudentsapi.entities.Student;
-import com.api.springstudentsapi.entities.Teacher;
 import com.api.springstudentsapi.services.CourseService;
 import com.api.springstudentsapi.services.StudentService;
 import com.api.springstudentsapi.services.TeacherService;
@@ -31,15 +29,13 @@ public class CourseController {
         return this.courseService.getAllCourses();
     }
 
-    @RequestMapping(value = "getCourse", method = RequestMethod.GET)
-    public Course getCourseById(
-            @RequestParam(name = "cid") Long courseId
-    ){
+    @GetMapping("/{courseId}")
+    public Course getCourseById(@PathVariable Long courseId) {
         return this.courseService.getCourseById(courseId);
     }
 
     @PostMapping
-    public Course createCourse(@RequestBody Course aCourse){
+    public Course createCourse(@RequestBody Course aCourse) {
         return this.courseService.addCourse(aCourse);
     }
 
