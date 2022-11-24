@@ -6,10 +6,7 @@ import com.api.springstudentsapi.services.CourseService;
 import com.api.springstudentsapi.services.RegistrationService;
 import com.api.springstudentsapi.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/registration")
@@ -24,9 +21,8 @@ public class RegistrationController {
         this.studentService = studentService;
         this.courseService = courseService;
     }
-
-    //Should be PostMapping because a resource (Registration) is being created
-    @PutMapping(path = "register")
+    
+    @PostMapping(path = "register")
     public void registerStudentToCourse(@RequestParam(name = "student") Long studentId, @RequestParam(name = "course") Long courseId) {
         // This belongs in the service layer
         Course foundCourse = courseService.getCourseById(courseId);
