@@ -32,8 +32,8 @@ public class StudentController {
         return this.studentService.addStudent(student);
     }
 
-    @DeleteMapping
-    void deleteStudent(Long id) {
+    @DeleteMapping(path = "delete")
+    void deleteStudent(@RequestParam(name = "sid") Long id) {
         this.studentService.deleteStudentById(id);
     }
 
