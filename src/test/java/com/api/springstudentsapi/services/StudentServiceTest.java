@@ -1,7 +1,7 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Student;
-import com.api.springstudentsapi.exceptions.student.StudentNotFound;
+import com.api.springstudentsapi.exceptions.student.StudentNotFoundException;
 import com.api.springstudentsapi.repositories.RegistrationRepository;
 import com.api.springstudentsapi.repositories.StudentRepository;
 import org.junit.jupiter.api.*;
@@ -71,8 +71,8 @@ class StudentServiceTest {
         // When
         // Then
         assertThatThrownBy(() -> classUnderTest.getStudentById(1L))
-                .isInstanceOf(StudentNotFound.class)
-                .hasMessageContaining("Student not found.");
+                .isInstanceOf(StudentNotFoundException.class)
+                .hasMessageContaining("Student not found in database. ID: " + 1L);
     }
 
     @Test
@@ -126,8 +126,8 @@ class StudentServiceTest {
         // When
         // Then
         assertThatThrownBy(() -> classUnderTest.deleteStudentById(1L))
-                .isInstanceOf(StudentNotFound.class)
-                .hasMessageContaining("Student not found.");
+                .isInstanceOf(StudentNotFoundException.class)
+                .hasMessageContaining("Student to delete not found");
     }
 
     @Test
@@ -173,7 +173,7 @@ class StudentServiceTest {
 
         // Then
         assertThatThrownBy(() -> classUnderTest.updateStudentById(1L, "new name"))
-                .isInstanceOf(StudentNotFound.class)
-                .hasMessageContaining("Student not found.");
+                .isInstanceOf(StudentNotFoundException.class)
+                .hasMessageContaining("Student not found in database. ID: " + 1L);
     }
 }

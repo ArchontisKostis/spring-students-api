@@ -2,14 +2,12 @@ package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.exceptions.course.CourseNotFoundException;
-import com.api.springstudentsapi.exceptions.teacher.TeacherNotFoundException;
 import com.api.springstudentsapi.repositories.CourseRepository;
 import com.api.springstudentsapi.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -27,13 +25,7 @@ public class CourseService {
     }
 
     public Course getCourseById(Long id) {
-        Optional<Course> courseOptional = courseRepository.findById(id);
-
-        if (!courseOptional.isPresent())
-            throw new CourseNotFoundException("Course not found.");
-
-        Course foundCourse = courseOptional.get();
-        return foundCourse;
+        return courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found in database. ID: " + id));
     }
 
     public Course addCourse(Course aCourse) {

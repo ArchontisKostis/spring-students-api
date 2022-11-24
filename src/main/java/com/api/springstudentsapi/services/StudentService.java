@@ -1,14 +1,13 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Student;
-import com.api.springstudentsapi.exceptions.student.StudentNotFound;
+import com.api.springstudentsapi.exceptions.student.StudentNotFoundException;
 import com.api.springstudentsapi.repositories.RegistrationRepository;
 import com.api.springstudentsapi.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -26,16 +25,10 @@ public class StudentService {
     }
 
     public Student getStudentById(Long id) {
-        Optional<Student> studentOptional = studentRepository.findById(id);
-
-        if (!studentOptional.isPresent())
-            throw new StudentNotFound("Student not found.");
-
-        Student foundStudent = studentOptional.get();
-        return foundStudent;
+        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id: " + id + " not found in database."));
     }
 
-    public Student addStudent(Student aStudent){
+    public Student addStudent(Student aStudent) {
         return this.studentRepository.save(aStudent);
     }
 
@@ -46,7 +39,7 @@ public class StudentService {
 
     public void updateStudentById(Long id, String newName) {
         Student student = getStudentById(id);
-        student.setName(newName);
+        student.setName(newName == null ? student.getName() : newName);
         studentRepository.save(student);
     }
 

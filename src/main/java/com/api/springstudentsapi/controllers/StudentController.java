@@ -23,12 +23,12 @@ public class StudentController {
     }
 
     @GetMapping(path = "getStudent")
-    public Student getStudentById(
-            @RequestParam(name = "sid") Long studentId
-    ) { return studentService.getStudentById(studentId); }
+    public Student getStudentById(@RequestParam(name = "sid") Long studentId) {
+        return studentService.getStudentById(studentId);
+    }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student){
+    public Student createStudent(@RequestBody Student student) {
         return this.studentService.addStudent(student);
     }
 
