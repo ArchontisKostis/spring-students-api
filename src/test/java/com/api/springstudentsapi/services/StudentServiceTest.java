@@ -72,7 +72,7 @@ class StudentServiceTest {
         // Then
         assertThatThrownBy(() -> classUnderTest.getStudentById(1L))
                 .isInstanceOf(StudentNotFound.class)
-                .hasMessageContaining("Student not found in database. ID: " + 1L);
+                .hasMessageContaining("Student not found.");
     }
 
     @Test
@@ -173,6 +173,6 @@ class StudentServiceTest {
         // Then
         assertThatThrownBy(() -> classUnderTest.updateStudentById(1L, "new name"))
                 .isInstanceOf(StudentNotFound.class)
-                .hasMessageContaining("Student not found in database. ID: " + 1L);
+                .hasMessageContaining("Student not found.");
     }
 }
