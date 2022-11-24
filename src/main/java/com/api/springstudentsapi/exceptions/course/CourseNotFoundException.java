@@ -1,8 +1,6 @@
 package com.api.springstudentsapi.exceptions.course;
 
-import com.api.springstudentsapi.exceptions.NotFoundException;
-
-public class CourseNotFoundException extends NotFoundException {
+public class CourseNotFoundException extends RuntimeException {
 
     public CourseNotFoundException(String msg) {
         super(msg);

@@ -1,8 +1,6 @@
 package com.api.springstudentsapi.exceptions.teacher;
 
-import com.api.springstudentsapi.exceptions.NotFoundException;
-
-public class TeacherNotFoundException extends NotFoundException {
+public class TeacherNotFoundException extends RuntimeException {
     public TeacherNotFoundException(String msg) {
         super(msg);
     }
