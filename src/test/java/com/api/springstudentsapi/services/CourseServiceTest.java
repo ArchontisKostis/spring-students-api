@@ -98,4 +98,42 @@ class CourseServiceTest {
                 .hasMessageContaining("Course not found in database. ID: " + 1L);
 
     }
+
+    @Test
+    void shouldDeleteCourseById() {
+        // Given
+        Course course = new Course(1L, "Spring Boot");
+
+        given(courseRepository.existsById(any(Long.class)))
+                .willReturn(true);
+
+        // Whem
+        classUnderTest.deleteCourse(1L);
+
+        // Then
+        ArgumentCaptor<Long> idCaptor =
+                ArgumentCaptor.forClass(Long.class);
+
+        verify(courseRepository)
+                .deleteById(idCaptor.capture());
+
+        Long capturedId = idCaptor.getValue();
+
+        assertThat(capturedId).isEqualTo(course.getId());
+    }
+
+    @Test
+    void shouldThrowOnDeleteStudentById() {
+        // Given
+        Course course = new Course(1L, "Spring Boot");
+
+        given(courseRepository.existsById(any(Long.class)))
+                .willReturn(false);
+
+        // Whem
+        // Then
+        assertThatThrownBy(() -> classUnderTest.deleteCourse(1L))
+                .isInstanceOf(CourseNotFoundException.class)
+                .hasMessageContaining("Course to delete does not exist.");
+    }
 }

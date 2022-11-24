@@ -43,5 +43,10 @@ public class CourseController {
         return this.courseService.addCourse(aCourse);
     }
 
+    @DeleteMapping(path = "delete")
+    void deleteCourse(@RequestParam(name = "cid") Long id) {
+        this.courseService.deleteCourse(id);
+    }
+
 
 }

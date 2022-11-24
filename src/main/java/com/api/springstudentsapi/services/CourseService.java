@@ -40,4 +40,12 @@ public class CourseService {
         return this.courseRepository.save(aCourse);
     }
 
+    public void deleteCourse(Long id) {
+        boolean idExists = courseRepository.existsById(id);
+
+        if (!idExists)
+            throw new CourseNotFoundException("Course to delete does not exist.");
+        courseRepository.deleteById(id);
+    }
+
 }
