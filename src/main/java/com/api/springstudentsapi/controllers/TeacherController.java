@@ -1,6 +1,5 @@
 package com.api.springstudentsapi.controllers;
 
-import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Teacher;
 import com.api.springstudentsapi.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,11 @@ public class TeacherController {
     @PostMapping
     public Teacher createTeacher(@RequestBody Teacher teacher){
         return this.teacherService.addTeacher(teacher);
+    }
+
+    @DeleteMapping(path = "delete")
+    public void deleteTeacher(@RequestParam(name = "tid") Long id) {
+        this.teacherService.deleteTeacher(id);
     }
 
 }

@@ -26,7 +26,7 @@ public class TeacherService {
         Optional<Teacher> teacherOptional = teacherRepository.findById(anId);
 
         if(teacherOptional.isEmpty())
-            throw new TeacherNotFoundException("Did not find Teacher.");
+            throw new TeacherNotFoundException("Teacher not found.");
 
         Teacher foundTeacher = teacherOptional.get();
         return foundTeacher;
@@ -34,5 +34,10 @@ public class TeacherService {
 
     public Teacher addTeacher(Teacher teacher) {
         return this.teacherRepository.save(teacher);
+    }
+
+    public void deleteTeacher(Long id) {
+        Teacher teacherToDelete = getTeacherById(id);
+        teacherRepository.delete(teacherToDelete);
     }
 }

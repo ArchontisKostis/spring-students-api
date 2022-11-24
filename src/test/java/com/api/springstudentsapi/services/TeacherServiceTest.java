@@ -91,7 +91,45 @@ class TeacherServiceTest {
         // Then
         assertThatThrownBy(() -> classUnderTest.getTeacherById(1L))
                 .isInstanceOf(TeacherNotFoundException.class)
-                .hasMessageContaining("Did not find Teacher.");
+                .hasMessageContaining("Teacher not found.");
 
+    }
+
+    @Test
+    void shouldDeleteTeacherById() {
+        // Given
+        Teacher teacherToDelete = new Teacher(1L, "Alex");
+
+        given(teacherRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(teacherToDelete));
+
+        // When
+        classUnderTest.deleteTeacher(1L);
+
+        // Then
+        ArgumentCaptor<Teacher> teacherCaptor =
+                ArgumentCaptor.forClass(Teacher.class);
+
+        verify(teacherRepository)
+                .delete(teacherCaptor.capture());
+
+        Teacher capturedTeacher = teacherCaptor.getValue();
+
+        assertThat(capturedTeacher).isEqualTo(teacherToDelete);
+    }
+
+    @Test
+    void shouldThrowOnDeleteTeacherById() {
+        // Given
+        Teacher teacherToDelete = new Teacher(1L, "Alex");
+
+        given(teacherRepository.findById(any(Long.class)))
+                .willReturn(Optional.empty());
+
+        // When
+        // Then
+        assertThatThrownBy(() -> classUnderTest.deleteTeacher(1L))
+                .isInstanceOf(TeacherNotFoundException.class)
+                .hasMessageContaining("Teacher not found.");
     }
 }
