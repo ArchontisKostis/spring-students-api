@@ -95,7 +95,7 @@ class CourseServiceTest {
         // Then
         assertThatThrownBy(() -> classUnderTest.getCourseById(1L))
                 .isInstanceOf(CourseNotFoundException.class)
-                .hasMessageContaining("Course not found in database. ID: " + 1L);
+                .hasMessageContaining("Course not found.");
 
     }
 
@@ -104,22 +104,22 @@ class CourseServiceTest {
         // Given
         Course course = new Course(1L, "Spring Boot");
 
-        given(courseRepository.existsById(any(Long.class)))
-                .willReturn(true);
+        given(courseRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(course));
 
         // Whem
         classUnderTest.deleteCourse(1L);
 
         // Then
-        ArgumentCaptor<Long> idCaptor =
-                ArgumentCaptor.forClass(Long.class);
+        ArgumentCaptor<Course> courseCaptor =
+                ArgumentCaptor.forClass(Course.class);
 
         verify(courseRepository)
-                .deleteById(idCaptor.capture());
+                .delete(courseCaptor.capture());
 
-        Long capturedId = idCaptor.getValue();
+        Course capturedCourse = courseCaptor.getValue();
 
-        assertThat(capturedId).isEqualTo(course.getId());
+        assertThat(capturedCourse).isEqualTo(course);
     }
 
     @Test
@@ -127,13 +127,46 @@ class CourseServiceTest {
         // Given
         Course course = new Course(1L, "Spring Boot");
 
-        given(courseRepository.existsById(any(Long.class)))
-                .willReturn(false);
+        given(courseRepository.findById(any(Long.class)))
+                .willReturn(Optional.empty());
 
         // Whem
         // Then
         assertThatThrownBy(() -> classUnderTest.deleteCourse(1L))
                 .isInstanceOf(CourseNotFoundException.class)
-                .hasMessageContaining("Course to delete does not exist.");
+                .hasMessageContaining("Course not found.");
+    }
+
+    @Test
+    void shouldUpdateCourseById() {
+        // Given
+        Course courseToUpdate = new Course(1L, "KAVE");
+        String newName = "JAVA";
+
+        given(courseRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(courseToUpdate));
+
+        // When
+        classUnderTest.updateCourseById(1L, newName);
+
+        // Then
+        ArgumentCaptor<Long> courseIdCaptor =
+                ArgumentCaptor.forClass(Long.class);
+
+        ArgumentCaptor<Course> courseCaptor =
+                ArgumentCaptor.forClass(Course.class);
+
+        verify(courseRepository)
+                .findById(courseIdCaptor.capture());
+
+        verify(courseRepository)
+                .save(courseCaptor.capture());
+
+        // Make sure we find the correct student
+        Long capturedId = courseIdCaptor.getValue();
+        assertThat(capturedId).isEqualTo(courseToUpdate.getId());
+        // Make sure that the name is update when we save
+        Course capturedCourse = courseCaptor.getValue();
+        assertThat(newName).isEqualTo(courseToUpdate.getName());
     }
 }

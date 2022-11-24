@@ -30,7 +30,7 @@ public class CourseService {
         Optional<Course> courseOptional = courseRepository.findById(id);
 
         if (!courseOptional.isPresent())
-            throw new CourseNotFoundException("Course not found in database. ID: " + id);
+            throw new CourseNotFoundException("Course not found.");
 
         Course foundCourse = courseOptional.get();
         return foundCourse;
@@ -41,11 +41,14 @@ public class CourseService {
     }
 
     public void deleteCourse(Long id) {
-        boolean idExists = courseRepository.existsById(id);
+        Course courseToDelete = getCourseById(id);
+        courseRepository.delete(courseToDelete);
+    }
 
-        if (!idExists)
-            throw new CourseNotFoundException("Course to delete does not exist.");
-        courseRepository.deleteById(id);
+    public void updateCourseById(Long id, String newName) {
+        Course courseToUpdate = getCourseById(id);
+        courseToUpdate.setName(newName);
+        courseRepository.save(courseToUpdate);
     }
 
 }

@@ -48,5 +48,11 @@ public class CourseController {
         this.courseService.deleteCourse(id);
     }
 
+    @PutMapping(path = "update")
+    public void updateCourse(
+            @RequestParam(name = "cid") Long courseId,
+            @RequestParam(name = "newName") String newCourseName
+    ){
 
+    }
 }
