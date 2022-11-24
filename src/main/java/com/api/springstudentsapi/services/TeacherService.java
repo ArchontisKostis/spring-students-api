@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TeacherService {
@@ -23,13 +22,7 @@ public class TeacherService {
     }
 
     public Teacher getTeacherById(Long anId) {
-        Optional<Teacher> teacherOptional = teacherRepository.findById(anId);
-
-        if(teacherOptional.isEmpty())
-            throw new TeacherNotFoundException("Did not find Teacher.");
-
-        Teacher foundTeacher = teacherOptional.get();
-        return foundTeacher;
+        return teacherRepository.findById(anId).orElseThrow(() -> new TeacherNotFoundException("Did not find Teacher."));
     }
 
     public Teacher addTeacher(Teacher teacher) {
