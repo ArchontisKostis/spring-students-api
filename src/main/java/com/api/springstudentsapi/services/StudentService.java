@@ -40,11 +40,8 @@ public class StudentService {
     }
 
     public void deleteStudentById(Long id) {
-        boolean idExists = studentRepository.existsById(id);
-
-        if (!idExists)
-            throw new StudentNotFound("Student to delete not found");
-        studentRepository.deleteById(id);
+        Student studentToDelete = getStudentById(id);
+        studentRepository.delete(studentToDelete);
     }
 
     public void updateStudentById(Long id, String newName) {

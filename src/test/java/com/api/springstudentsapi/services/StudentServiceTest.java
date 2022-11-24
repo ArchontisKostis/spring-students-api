@@ -99,20 +99,20 @@ class StudentServiceTest {
         // Given
         Student student = new Student(1L, "Archo");
 
-        given(studentRepository.existsById(any(Long.class)))
-                .willReturn(true);
+        given(studentRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(student));
         // When
         classUnderTest.deleteStudentById(1L);
 
         // Then
-        ArgumentCaptor<Long> studentIdCaptor =
-                ArgumentCaptor.forClass(Long.class);
+        ArgumentCaptor<Student> studentCaptor =
+                ArgumentCaptor.forClass(Student.class);
 
         verify(studentRepository)
-                .deleteById(studentIdCaptor.capture());
+                .delete(studentCaptor.capture());
 
-        Long capturedId = studentIdCaptor.getValue();
-        assertThat(capturedId).isEqualTo(student.getId());
+        Student capturedStudent = studentCaptor.getValue();
+        assertThat(capturedStudent).isEqualTo(student);
     }
 
     @Test
@@ -120,13 +120,14 @@ class StudentServiceTest {
         // Given
         Student student = new Student(1L, "Archo");
 
-        given(studentRepository.existsById(any(Long.class)))
-                .willReturn(false);
+        given(studentRepository.findById(any(Long.class)))
+                .willReturn(Optional.empty());
+
         // When
         // Then
         assertThatThrownBy(() -> classUnderTest.deleteStudentById(1L))
                 .isInstanceOf(StudentNotFound.class)
-                .hasMessageContaining("Student to delete not found");
+                .hasMessageContaining("Student not found.");
     }
 
     @Test
