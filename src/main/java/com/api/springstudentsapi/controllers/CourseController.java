@@ -53,6 +53,6 @@ public class CourseController {
             @RequestParam(name = "cid") Long courseId,
             @RequestParam(name = "newName") String newCourseName
     ){
-
+        this.courseService.updateCourseById(courseId, newCourseName);
     }
 }
