@@ -23,20 +23,25 @@ public class StudentController {
     }
 
     @GetMapping(path = "getStudent")
-    public Student getStudentById(
-            @RequestParam(name = "sid") Long studentId
-    ) { return studentService.getStudentById(studentId); }
+    public Student getStudentById(@RequestParam(name = "sid") Long studentId) {
+        return studentService.getStudentById(studentId);
+    }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student){
+    public Student createStudent(@RequestBody Student student) {
         return this.studentService.addStudent(student);
     }
 
-    @DeleteMapping
-    void deleteStudent(Long id) {
+    //Get id from PathVariable
+    @DeleteMapping("/{id}")
+    void deleteStudent(@PathVariable Long id) {
         this.studentService.deleteStudentById(id);
     }
 
+
+    //Get updated values as Request Body from a DTO
+    //What if the object has 20 fields?...Too many RequestParams
+    //PathVariables and RequestParams are shown in the url which are a security threat
     @PutMapping(path = "update")
     public void updateStudent(
             @RequestParam(name = "sid") Long studentId,
