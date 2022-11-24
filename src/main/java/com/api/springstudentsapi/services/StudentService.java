@@ -29,7 +29,7 @@ public class StudentService {
         Optional<Student> studentOptional = studentRepository.findById(id);
 
         if (!studentOptional.isPresent())
-            throw new StudentNotFound("Student with id: " + id + " not found in database.");
+            throw new StudentNotFound("Student not found.");
 
         Student foundStudent = studentOptional.get();
         return foundStudent;
