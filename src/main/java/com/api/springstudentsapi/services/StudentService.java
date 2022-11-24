@@ -25,7 +25,7 @@ public class StudentService {
     }
 
     public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id: " + id + " not found in database."));
+        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student not found."));
     }
 
     public Student addStudent(Student aStudent) {

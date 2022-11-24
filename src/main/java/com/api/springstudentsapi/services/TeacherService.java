@@ -22,7 +22,7 @@ public class TeacherService {
     }
 
     public Teacher getTeacherById(Long anId) {
-        return teacherRepository.findById(anId).orElseThrow(() -> new TeacherNotFoundException("Did not find Teacher."));
+        return teacherRepository.findById(anId).orElseThrow(() -> new TeacherNotFoundException("Teacher not found."));
     }
 
     public Teacher addTeacher(Teacher teacher) {

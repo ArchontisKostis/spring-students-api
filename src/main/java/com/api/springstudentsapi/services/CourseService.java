@@ -25,7 +25,7 @@ public class CourseService {
     }
 
     public Course getCourseById(Long id) {
-        return courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found in database. ID: " + id));
+        return courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found." + id));
     }
 
     public Course addCourse(Course aCourse) {
