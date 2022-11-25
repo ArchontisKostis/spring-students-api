@@ -29,7 +29,7 @@ public class CourseController {
         return this.courseService.getAllCourses();
     }
 
-    @GetMapping("")
+    @GetMapping("course")
     public Course getCourseById(@RequestParam(name = "cid") Long courseId) {
         return this.courseService.getCourseById(courseId);
     }
