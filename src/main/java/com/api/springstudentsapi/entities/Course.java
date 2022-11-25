@@ -31,6 +31,11 @@ public class Course {
     @JsonIgnore
     @Getter @Setter
     private Set<Registration> courseRegistrations;
+
+    @OneToMany(mappedBy = "course")
+    @JsonIgnore
+    @Getter @Setter
+    private Set<Registration> courseTeachings;
     
     public Course(Long id, String name) {
         this.id = id;

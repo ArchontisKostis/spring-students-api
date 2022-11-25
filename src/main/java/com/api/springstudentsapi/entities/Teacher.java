@@ -1,7 +1,9 @@
 package com.api.springstudentsapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
+import java.util.Set;
 
 @ToString
 @AllArgsConstructor
@@ -22,4 +24,14 @@ public class Teacher {
     private Long id;
     @Getter @Setter
     private String name;
+
+    @OneToMany(mappedBy = "teacher")
+    @JsonIgnore
+    @Getter @Setter
+    private Set<Teaching> teacherTeachings;
+
+    public Teacher(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
