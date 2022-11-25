@@ -24,6 +24,11 @@ public class Teaching {
     @Getter @Setter
     private Teacher teacher;
 
+    public Teaching(Teacher teacher, Course course) {
+        this.teacher = teacher;
+        this.course = course;
+    }
+
     @Override
     public String toString() {
         return "Teaching{" +
