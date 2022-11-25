@@ -29,8 +29,8 @@ public class CourseController {
         return this.courseService.getAllCourses();
     }
 
-    @GetMapping("/{courseId}")
-    public Course getCourseById(@PathVariable Long courseId) {
+    @GetMapping("")
+    public Course getCourseById(@RequestParam(name = "cid") Long courseId) {
         return this.courseService.getCourseById(courseId);
     }
 
