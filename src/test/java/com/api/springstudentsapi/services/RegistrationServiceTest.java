@@ -34,7 +34,15 @@ class RegistrationServiceTest {
     }
 
     @Test
-    void registerStudentToCourse() {
+    void shouldGetAllRegistrations() {
+        // When
+        classUnderTest.getRegistrations();
+        // Then
+        verify(registrationRepository).findAll();
+    }
+
+    @Test
+    void shouldRegisterStudentToCourse() {
         // Given
         Student givenStudent = new Student(1L, "Archo");
         Course givenCourse = new Course(1L, "Web Dev");
