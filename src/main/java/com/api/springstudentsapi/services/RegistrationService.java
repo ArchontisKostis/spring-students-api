@@ -1,5 +1,6 @@
 package com.api.springstudentsapi.services;
 
+import com.api.springstudentsapi.dto.RegistrationDTO;
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Registration;
 import com.api.springstudentsapi.entities.Student;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class RegistrationService {
@@ -18,8 +22,10 @@ public class RegistrationService {
         this.registrationRepository = registrationRepository;
     }
 
-    public Collection<Registration> getRegistrations() {
-        return registrationRepository.findAll();
+    public List<RegistrationDTO> getRegistrations() {
+        List<Registration> registrationList = registrationRepository.findAll();
+        return registrationList.stream()
+                .map(registration -> RegistrationDTO.convert(registration)).collect(Collectors.toList());
     }
 
     public Registration registerStudentToCourse(Student student, Course course) {

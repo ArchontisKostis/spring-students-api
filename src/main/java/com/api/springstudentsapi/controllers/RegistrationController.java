@@ -1,12 +1,17 @@
 package com.api.springstudentsapi.controllers;
 
+import com.api.springstudentsapi.dto.RegistrationDTO;
 import com.api.springstudentsapi.entities.Course;
+import com.api.springstudentsapi.entities.Registration;
 import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.services.CourseService;
 import com.api.springstudentsapi.services.RegistrationService;
 import com.api.springstudentsapi.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/registration")
@@ -20,6 +25,11 @@ public class RegistrationController {
         this.registrationService = registrationService;
         this.studentService = studentService;
         this.courseService = courseService;
+    }
+
+    @GetMapping
+    public List<RegistrationDTO> getAllRegistrations() {
+        return  this.registrationService.getRegistrations();
     }
     
     @PostMapping(path = "register")
