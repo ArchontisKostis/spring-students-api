@@ -1,5 +1,7 @@
 package com.api.springstudentsapi.services;
 
+import com.api.springstudentsapi.dto.RegistrationDTO;
+import com.api.springstudentsapi.dto.StudentDTO;
 import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.exceptions.student.StudentNotFoundException;
 import com.api.springstudentsapi.repositories.RegistrationRepository;
@@ -7,20 +9,20 @@ import com.api.springstudentsapi.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final RegistrationRepository registrationRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, RegistrationRepository registrationRepository) {
+    public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-        this.registrationRepository = registrationRepository;
     }
 
-    public List<Student> getAllStudents() {
+    public Collection<Student> getAllStudents() {
         return this.studentRepository.findAll();
     }
 

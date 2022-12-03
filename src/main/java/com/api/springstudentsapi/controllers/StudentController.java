@@ -1,10 +1,13 @@
 package com.api.springstudentsapi.controllers;
 
+import com.api.springstudentsapi.dto.DTOMapper;
+import com.api.springstudentsapi.dto.StudentDTO;
 import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -18,13 +21,15 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    public List<StudentDTO> getAllStudents() {
+        Collection<Student> students = studentService.getAllStudents();
+        return DTOMapper.mapToStudentDTOList(students);
     }
 
     @GetMapping(path = "getStudent")
-    public Student getStudentById(@RequestParam(name = "sid") Long studentId) {
-        return studentService.getStudentById(studentId);
+    public StudentDTO getStudentById(@RequestParam(name = "sid") Long studentId) {
+        Student foundStudent = studentService.getStudentById(studentId);
+        return StudentDTO.convert(foundStudent);
     }
 
     @PostMapping

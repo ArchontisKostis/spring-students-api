@@ -29,7 +29,7 @@ class StudentServiceTest {
     void setUp(TestInfo testInfo) {
         System.out.println("----- Test " + testInfo.getDisplayName() + " Started -----");
 
-        classUnderTest = new StudentService(studentRepository, registrationRepository);
+        classUnderTest = new StudentService(studentRepository);
     }
 
     @AfterEach
