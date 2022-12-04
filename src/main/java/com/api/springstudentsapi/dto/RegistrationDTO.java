@@ -13,11 +13,13 @@ import lombok.Setter;
 
 public class RegistrationDTO {
     @Getter @Setter
-    private Student student;
+    private String name;
     @Getter @Setter
-    private CourseDTO course;
+    private int grade;
 
     public static RegistrationDTO convert(Registration registration) {
-        return new RegistrationDTO(registration.getStudent(), CourseDTO.convert(registration.getCourse(), registration.getGrade()));
+        String courseName = registration.getCourse().getName();
+        int grade = registration.getGrade();
+        return new RegistrationDTO(courseName, grade);
     }
 }
