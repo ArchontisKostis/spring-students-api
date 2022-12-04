@@ -19,10 +19,18 @@ public class DTOMapper {
         return studentDTOS;
     }
 
-    public static List<EnrolledCourseDTO> mapToRegistrationDTOList(List<Registration> registrations) {
+    public static List<EnrolledCourseDTO> mapToEnrolledCoursesDTOList(List<Registration> registrations) {
         Stream<Registration> registrationStream = registrations.stream();
         Stream<EnrolledCourseDTO> registrationDTOStream =
                 registrationStream.map(registration -> EnrolledCourseDTO.convert(registration));
+
+        return registrationDTOStream.toList();
+    }
+
+    public static List<RegistrationDTO> mapToRegistrationDTOList(List<Registration> registrations) {
+        Stream<Registration> registrationStream = registrations.stream();
+        Stream<RegistrationDTO> registrationDTOStream =
+                registrationStream.map(registration -> RegistrationDTO.convert(registration));
 
         return registrationDTOStream.toList();
     }

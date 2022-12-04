@@ -19,7 +19,7 @@ public class StudentDTO {
     private Collection<EnrolledCourseDTO> enrolledCourses;
 
     public static StudentDTO convert(Student student) {
-        Collection<EnrolledCourseDTO> studentRegistrations = DTOMapper.mapToRegistrationDTOList(student.getStudentRegistrations());
+        Collection<EnrolledCourseDTO> studentRegistrations = DTOMapper.mapToEnrolledCoursesDTOList(student.getStudentRegistrations());
         return new StudentDTO(student.getId(), student.getName(), studentRegistrations);
     }
 }
