@@ -1,5 +1,6 @@
 package com.api.springstudentsapi.dto;
 
+import com.api.springstudentsapi.entities.Registration;
 import com.api.springstudentsapi.entities.Student;
 
 import java.util.Collection;
@@ -16,5 +17,13 @@ public class DTOMapper {
                         .collect(Collectors.toList());
 
         return studentDTOS;
+    }
+
+    public static Collection<RegistrationDTO> mapToRegistrationDTOList(List<Registration> registrations) {
+        Stream<Registration> registrationStream = registrations.stream();
+        Stream<RegistrationDTO> registrationDTOStream =
+                registrationStream.map(registration -> RegistrationDTO.convert(registration));
+
+        return registrationDTOStream.toList();
     }
 }
