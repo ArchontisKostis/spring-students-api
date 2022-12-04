@@ -12,12 +12,10 @@ import java.util.Collection;
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
-    private final RegistrationRepository registrationRepository;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, RegistrationRepository registrationRepository) {
+    public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
-        this.registrationRepository = registrationRepository;
     }
 
     public Collection<Course> getAllCourses() {

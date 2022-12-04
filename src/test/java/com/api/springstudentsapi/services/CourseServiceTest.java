@@ -26,12 +26,11 @@ class CourseServiceTest {
     @Mock
     CourseRepository courseRepository;
     CourseService classUnderTest;
-    RegistrationRepository registrationRepository;
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
         System.out.println("----- Test " + testInfo.getDisplayName() + " Started -----");
-        classUnderTest = new CourseService(courseRepository, registrationRepository);
+        classUnderTest = new CourseService(courseRepository);
     }
 
     @AfterEach
