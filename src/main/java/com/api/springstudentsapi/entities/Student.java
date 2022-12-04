@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -31,7 +32,7 @@ public class Student {
     @OneToMany(mappedBy = "student")
     @JsonIgnore
     @Getter @Setter
-    private Set<Registration> studentRegistrations;
+    private List<Registration> studentRegistrations;
 
     public Student(Long id , String name) {
         this.id = id;
