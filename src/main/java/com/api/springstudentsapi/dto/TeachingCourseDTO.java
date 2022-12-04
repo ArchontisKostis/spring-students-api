@@ -1,5 +1,6 @@
 package com.api.springstudentsapi.dto;
 
+import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Teaching;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,10 @@ public class TeachingCourseDTO {
     private String course;
 
     public static TeachingCourseDTO convert(Teaching teaching) {
-        return new TeachingCourseDTO(teaching.getCourse().getId(), teaching.getCourse().getName());
+        Course teachingCourse = teaching.getCourse();
+        String courseName = teachingCourse.getName();
+        Long courseId = teachingCourse.getId();
+
+        return new TeachingCourseDTO(courseId, courseName);
     }
 }
