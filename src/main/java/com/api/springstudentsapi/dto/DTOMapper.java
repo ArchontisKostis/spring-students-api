@@ -2,6 +2,8 @@ package com.api.springstudentsapi.dto;
 
 import com.api.springstudentsapi.entities.Registration;
 import com.api.springstudentsapi.entities.Student;
+import com.api.springstudentsapi.entities.Teacher;
+import com.api.springstudentsapi.entities.Teaching;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DTOMapper {
-    public static List<StudentDTO> mapToStudentDTOList(Collection<Student> studentList) {
+    public static List<StudentDTO> mapToStudentDTOList(List<Student> studentList) {
         Stream<Student> studentsStream = studentList.stream();
         List<StudentDTO> studentDTOS =
                 studentsStream
@@ -33,5 +35,21 @@ public class DTOMapper {
                 registrationStream.map(registration -> RegistrationDTO.convert(registration));
 
         return registrationDTOStream.toList();
+    }
+
+    public static List<TeacherDTO> mapToTeachersList(List<Teacher> teachers){
+        Stream<Teacher> teacherStream = teachers.stream();
+        Stream<TeacherDTO> teacherDTOStream =
+                teacherStream.map(teacher -> TeacherDTO.convert(teacher));
+
+        return teacherDTOStream.toList();
+    }
+
+    public static List<TeachingCourseDTO> mapToTeachingCourseDTOList(List<Teaching> teachings){
+        Stream<Teaching> teachingStream = teachings.stream();
+        Stream<TeachingCourseDTO> teachingCourseDTOStream =
+                teachingStream.map(teaching -> TeachingCourseDTO.convert(teaching));
+
+        return teachingCourseDTOStream.toList();
     }
 }

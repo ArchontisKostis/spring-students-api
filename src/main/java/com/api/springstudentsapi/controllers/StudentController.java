@@ -22,7 +22,7 @@ public class StudentController {
 
     @GetMapping
     public List<StudentDTO> getAllStudents() {
-        Collection<Student> students = studentService.getAllStudents();
+        List<Student> students = studentService.getAllStudents();
         return DTOMapper.mapToStudentDTOList(students);
     }
 

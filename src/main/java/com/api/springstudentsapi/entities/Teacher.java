@@ -3,6 +3,7 @@ package com.api.springstudentsapi.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @ToString
@@ -28,7 +29,7 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     @JsonIgnore
     @Getter @Setter
-    private Set<Teaching> teacherTeachings;
+    private List<Teaching> teacherTeachings;
 
     public Teacher(Long id, String name) {
         this.id = id;
