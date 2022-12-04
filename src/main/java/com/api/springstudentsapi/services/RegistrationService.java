@@ -22,14 +22,8 @@ public class RegistrationService {
         this.registrationRepository = registrationRepository;
     }
 
-    public List<RegistrationDTO> getRegistrations() {
-        List<Registration> registrationList = registrationRepository.findAll();
-
-        Stream<RegistrationDTO> registrationDTOStream =
-                registrationList.stream()
-                        .map(registration -> RegistrationDTO.convert(registration));
-
-        return registrationDTOStream.collect(Collectors.toList());
+    public List<Registration> getRegistrations() {
+        return registrationRepository.findAll();
     }
 
     public Registration registerStudentToCourse(Student student, Course course) {
