@@ -1,7 +1,7 @@
 package com.api.springstudentsapi.controllers;
 
 import com.api.springstudentsapi.dto.DTOMapper;
-import com.api.springstudentsapi.dto.RegistrationDTO;
+import com.api.springstudentsapi.dto.EnrolledCourseDTO;
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Registration;
 import com.api.springstudentsapi.entities.Student;
@@ -11,7 +11,6 @@ import com.api.springstudentsapi.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -29,7 +28,7 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public List<RegistrationDTO> getAllRegistrations() {
+    public List<EnrolledCourseDTO> getAllRegistrations() {
         List<Registration> allRegistrations =  this.registrationService.getRegistrations();
         return DTOMapper.mapToRegistrationDTOList(allRegistrations);
     }

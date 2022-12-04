@@ -1,6 +1,5 @@
 package com.api.springstudentsapi.services;
 
-import com.api.springstudentsapi.dto.RegistrationDTO;
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Registration;
 import com.api.springstudentsapi.entities.Student;
@@ -8,10 +7,7 @@ import com.api.springstudentsapi.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class RegistrationService {

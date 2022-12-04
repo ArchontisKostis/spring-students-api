@@ -1,8 +1,6 @@
 package com.api.springstudentsapi.dto;
 
-import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Registration;
-import com.api.springstudentsapi.entities.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,15 +9,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class RegistrationDTO {
+public class EnrolledCourseDTO {
     @Getter @Setter
     private String name;
     @Getter @Setter
     private int grade;
 
-    public static RegistrationDTO convert(Registration registration) {
+    public static EnrolledCourseDTO convert(Registration registration) {
         String courseName = registration.getCourse().getName();
         int grade = registration.getGrade();
-        return new RegistrationDTO(courseName, grade);
+        return new EnrolledCourseDTO(courseName, grade);
     }
 }

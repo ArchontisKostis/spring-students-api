@@ -1,17 +1,12 @@
 package com.api.springstudentsapi.services;
 
-import com.api.springstudentsapi.dto.RegistrationDTO;
-import com.api.springstudentsapi.dto.StudentDTO;
 import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.exceptions.student.StudentNotFoundException;
-import com.api.springstudentsapi.repositories.RegistrationRepository;
 import com.api.springstudentsapi.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
