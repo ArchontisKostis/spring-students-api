@@ -39,9 +39,6 @@ public class RegistrationController {
     
     @PostMapping(path = "register")
     public void registerStudentToCourse(@RequestParam(name = "student") Long studentId, @RequestParam(name = "course") Long courseId) {
-        Course foundCourse = courseService.getCourseById(courseId);
-        Student foundStudent = studentService.getStudentById(studentId);
-
         registrationService.registerStudentToCourse(studentId, courseId);
     }
 }
