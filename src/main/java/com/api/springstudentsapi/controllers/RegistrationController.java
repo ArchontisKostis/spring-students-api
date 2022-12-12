@@ -1,7 +1,6 @@
 package com.api.springstudentsapi.controllers;
 
 import com.api.springstudentsapi.dto.DTOMapper;
-import com.api.springstudentsapi.dto.EnrolledCourseDTO;
 import com.api.springstudentsapi.dto.RegistrationDTO;
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Registration;

@@ -3,7 +3,6 @@ package com.api.springstudentsapi.services;
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.exceptions.course.CourseNotFoundException;
 import com.api.springstudentsapi.repositories.CourseRepository;
-import com.api.springstudentsapi.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

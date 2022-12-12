@@ -1,7 +1,5 @@
 package com.api.springstudentsapi.dto;
 
-import com.api.springstudentsapi.entities.Course;
-import com.api.springstudentsapi.entities.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,15 +2,11 @@ package com.api.springstudentsapi.controllers;
 
 import com.api.springstudentsapi.dto.DTOMapper;
 import com.api.springstudentsapi.dto.TeacherDTO;
-import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.entities.Teacher;
-import com.api.springstudentsapi.entities.Teaching;
 import com.api.springstudentsapi.services.TeacherService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 

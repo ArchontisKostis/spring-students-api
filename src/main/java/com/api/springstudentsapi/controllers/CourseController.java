@@ -13,15 +13,11 @@ import java.util.Collection;
 @RequestMapping("api/courses")
 public class CourseController {
     private final CourseService courseService;
-    private final StudentService studentService;
-    private final TeacherService teacherService;
 
 
     @Autowired
     public CourseController(CourseService courseService, StudentService studentService, TeacherService teacherService) {
         this.courseService = courseService;
-        this.studentService = studentService;
-        this.teacherService = teacherService;
     }
 
     @GetMapping
