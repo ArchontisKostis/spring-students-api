@@ -23,11 +23,10 @@ public class TeacherController {
     @GetMapping
     public List<TeacherDTO> getAllTeachers() {
         List<Teacher> teachers = this.teacherService.getAllTeachers();
-        Stream<TeacherDTO> teacherDTOStream =
-                teachers.stream()
-                        .map(teacher -> DTOMapper.convertToTeacherDTO(teacher));
 
-        return teacherDTOStream.toList();
+        return teachers.stream()
+                .map(teacher -> DTOMapper.convertToTeacherDTO(teacher))
+                .toList();
     }
 
     @GetMapping(path = "getTeacher")
