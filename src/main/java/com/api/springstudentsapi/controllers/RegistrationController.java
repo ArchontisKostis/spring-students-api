@@ -31,11 +31,10 @@ public class RegistrationController {
     @GetMapping
     public List<RegistrationDTO> getAllRegistrations() {
         List<Registration> allRegistrations =  this.registrationService.getRegistrations();
-        Stream<RegistrationDTO> registrationDTOStream =
-                allRegistrations.stream()
-                        .map(registration -> DTOMapper.convertToRegistrationDTO(registration));
 
-        return registrationDTOStream.toList();
+        return allRegistrations.stream()
+                .map(registration -> DTOMapper.convertToRegistrationDTO(registration))
+                .toList();
     }
     
     @PostMapping(path = "register")
