@@ -12,18 +12,25 @@ import java.util.List;
 @Service
 public class RegistrationService {
     private final RegistrationRepository registrationRepository;
+    private final StudentService studentService;
+    private final CourseService courseService;
 
     @Autowired
-    public RegistrationService(RegistrationRepository registrationRepository) {
+    public RegistrationService(RegistrationRepository registrationRepository, StudentService studentService, CourseService courseService) {
         this.registrationRepository = registrationRepository;
+        this.studentService = studentService;
+        this.courseService = courseService;
     }
 
     public List<Registration> getRegistrations() {
         return registrationRepository.findAll();
     }
 
-    public Registration registerStudentToCourse(Student student, Course course) {
-        Registration registration = new Registration(student, course);
+    public Registration registerStudentToCourse(Long studentId, Long courseId) {
+        Student studentToRegister = studentService.getStudentById(studentId);
+        Course courseToEnroll = courseService.getCourseById(courseId);
+
+        Registration registration = new Registration(studentToRegister, courseToEnroll);
         return registrationRepository.save(registration);
     }
 }

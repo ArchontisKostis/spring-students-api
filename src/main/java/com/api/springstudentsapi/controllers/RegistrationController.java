@@ -42,6 +42,6 @@ public class RegistrationController {
         Course foundCourse = courseService.getCourseById(courseId);
         Student foundStudent = studentService.getStudentById(studentId);
 
-        registrationService.registerStudentToCourse(foundStudent, foundCourse);
+        registrationService.registerStudentToCourse(studentId, courseId);
     }
 }
