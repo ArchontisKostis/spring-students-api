@@ -18,14 +18,4 @@ public class TeacherDTO {
     private String name;
     @Getter @Setter
     private List<TeachingCourseDTO> teachingCourses;
-
-    public static TeacherDTO convert(Teacher teacher) {
-        Long teacherId = teacher.getId();
-        String teacherName = teacher.getName();
-
-        List<TeachingCourseDTO> teacherCourses =
-                DTOMapper.mapToTeachingCourseDTOList(teacher.getTeacherTeachings());
-
-        return new TeacherDTO(teacherId, teacherName, teacherCourses);
-    }
 }
