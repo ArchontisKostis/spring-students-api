@@ -25,7 +25,7 @@ public class Teacher {
     @Getter @Setter
     private String name;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @JsonIgnore
     @Getter @Setter
     private List<Teaching> teacherTeachings;

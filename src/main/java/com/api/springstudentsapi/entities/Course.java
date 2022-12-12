@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @ToString
@@ -27,15 +28,15 @@ public class Course {
     @Getter @Setter
     private String name;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonIgnore
     @Getter @Setter
-    private Set<Registration> courseRegistrations;
+    private List<Registration> courseRegistrations;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonIgnore
     @Getter @Setter
-    private Set<Registration> courseTeachings;
+    private List<Teaching> courseTeachings;
     
     public Course(Long id, String name) {
         this.id = id;
