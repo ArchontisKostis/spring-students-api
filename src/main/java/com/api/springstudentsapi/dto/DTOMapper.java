@@ -12,74 +12,53 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DTOMapper {
-    public static List<StudentDTO> mapToStudentDTOList(List<Student> studentList) {
-        Stream<Student> studentsStream = studentList.stream();
-        List<StudentDTO> studentDTOS =
-                studentsStream
-                        .map(student -> {
-                            StudentDTO studentDTO = new StudentDTO();
-                            BeanUtils.copyProperties(student, studentDTO);
+    public static TeacherDTO convertToTeacherDTO(Teacher teacher) {
+        List<Teaching> teachings = teacher.getTeacherTeachings();
 
-                            studentDTO.setEnrolledCourses(mapToEnrolledCoursesDTOList(student.getStudentRegistrations()));
-
-                            return studentDTO;
-                        })
+        List<TeachingCourseDTO> teachingsDTOs =
+                teachings.stream()
+                        .map(teaching -> convertToTeachingCourseDTO(teaching))
                         .toList();
 
-        return studentDTOS;
+        TeacherDTO teacherDTO = new TeacherDTO();
+        BeanUtils.copyProperties(teacher, teacherDTO);
+        teacherDTO.setTeachingCourses(teachingsDTOs);
+
+        return teacherDTO;
     }
 
-    public static List<EnrolledCourseDTO> mapToEnrolledCoursesDTOList(List<Registration> registrations) {
-        Stream<Registration> registrationStream = registrations.stream();
-        Stream<EnrolledCourseDTO> registrationDTOStream =
-                registrationStream.map(registration -> {
-                    EnrolledCourseDTO enrolledCourseDTO = new EnrolledCourseDTO();
-                    BeanUtils.copyProperties(registration, enrolledCourseDTO);
+    public static StudentDTO convertToStudentDTO(Student student) {
+        List<Registration> registrations = student.getStudentRegistrations();
+        List<EnrolledCourseDTO> registrationDTOs =
+                registrations.stream()
+                        .map(registration -> convertToEnrolledCourseDTO(registration))
+                        .toList();
 
-                    return enrolledCourseDTO;
-                });
+        StudentDTO studentDTO = new StudentDTO();
+        BeanUtils.copyProperties(student, studentDTO);
+        studentDTO.setEnrolledCourses(registrationDTOs);
 
-        return registrationDTOStream.toList();
+        return studentDTO;
     }
 
-    public static List<RegistrationDTO> mapToRegistrationDTOList(List<Registration> registrations) {
-        Stream<Registration> registrationStream = registrations.stream();
-        Stream<RegistrationDTO> registrationDTOStream =
-                registrationStream.map(registration -> {
-                    RegistrationDTO registrationDTO = new RegistrationDTO();
-                    BeanUtils.copyProperties(registration, registrationDTO);
+    public static RegistrationDTO convertToRegistrationDTO(Registration registration) {
+        RegistrationDTO registrationDTO = new RegistrationDTO();
+        BeanUtils.copyProperties(registration, registrationDTO);
 
-                    return registrationDTO;
-                });
-
-        return registrationDTOStream.toList();
+        return registrationDTO;
     }
 
-    public static List<TeacherDTO> mapToTeachersList(List<Teacher> teachers){
-        Stream<Teacher> teacherStream = teachers.stream();
-        Stream<TeacherDTO> teacherDTOStream =
-                teacherStream.map(teacher -> {
-                    TeacherDTO teacherDTO = new TeacherDTO();
-                    BeanUtils.copyProperties(teacher, teacherDTO);
+    private static TeachingCourseDTO convertToTeachingCourseDTO(Teaching teaching) {
+        TeachingCourseDTO teachingCourseDTO = new TeachingCourseDTO();
+        BeanUtils.copyProperties(teaching, teachingCourseDTO);
 
-                    teacherDTO.setTeachingCourses(mapToTeachingCourseDTOList(teacher.getTeacherTeachings()));
-
-                    return teacherDTO;
-                });
-
-        return teacherDTOStream.toList();
+        return teachingCourseDTO;
     }
 
-    public static List<TeachingCourseDTO> mapToTeachingCourseDTOList(List<Teaching> teachings){
-        Stream<Teaching> teachingStream = teachings.stream();
-        Stream<TeachingCourseDTO> teachingCourseDTOStream =
-                teachingStream.map(teaching -> {
-                    TeachingCourseDTO teachingCourseDTO = new TeachingCourseDTO();
-                    BeanUtils.copyProperties(teaching, teachingCourseDTO);
+    private static EnrolledCourseDTO convertToEnrolledCourseDTO(Registration registration) {
+        EnrolledCourseDTO enrolledCourseDTO = new EnrolledCourseDTO();
+        BeanUtils.copyProperties(registration, enrolledCourseDTO);
 
-                    return teachingCourseDTO;
-                });
-
-        return teachingCourseDTOStream.toList();
+        return enrolledCourseDTO;
     }
 }

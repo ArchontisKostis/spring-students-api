@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("api/teachers")
@@ -26,19 +27,17 @@ public class TeacherController {
     @GetMapping
     public List<TeacherDTO> getAllTeachers() {
         List<Teacher> teachers = this.teacherService.getAllTeachers();
-        return DTOMapper.mapToTeachersList(teachers);
+        Stream<TeacherDTO> teacherDTOStream =
+                teachers.stream()
+                        .map(teacher -> DTOMapper.convertToTeacherDTO(teacher));
+
+        return teacherDTOStream.toList();
     }
 
     @GetMapping(path = "getTeacher")
     public TeacherDTO getTeacherById(@RequestParam(name = "tid") Long teacherId) {
         Teacher foundTeacher = teacherService.getTeacherById(teacherId);
-        List<Teaching> teachings = foundTeacher.getTeacherTeachings();
-
-        TeacherDTO teacherDTO = new TeacherDTO();
-        BeanUtils.copyProperties(foundTeacher, teacherDTO);
-        teacherDTO.setTeachingCourses(DTOMapper.mapToTeachingCourseDTOList(teachings));
-
-        return teacherDTO;
+        return DTOMapper.convertToTeacherDTO(foundTeacher);
     }
 
     @PostMapping

@@ -28,13 +28,7 @@ public class StudentController {
         List<Student> students = studentService.getAllStudents();
         Stream<StudentDTO> studentDTOStream =
                 students.stream()
-                        .map(student -> {
-                            StudentDTO studentDTO = new StudentDTO();
-                            studentDTO.setEnrolledCourses(DTOMapper.mapToEnrolledCoursesDTOList(student.getStudentRegistrations()));
-                            BeanUtils.copyProperties(student, studentDTO);
-
-                            return studentDTO;
-                        });
+                        .map(student -> DTOMapper.convertToStudentDTO(student));
 
         return studentDTOStream.toList();
     }
@@ -42,13 +36,7 @@ public class StudentController {
     @GetMapping(path = "getStudent")
     public StudentDTO getStudentById(@RequestParam(name = "sid") Long studentId) {
         Student foundStudent = studentService.getStudentById(studentId);
-        List<Registration> registrations = foundStudent.getStudentRegistrations();
-
-        StudentDTO studentDTO = new StudentDTO();
-        BeanUtils.copyProperties(foundStudent, studentDTO);
-        studentDTO.setEnrolledCourses(DTOMapper.mapToEnrolledCoursesDTOList(registrations));
-
-        return studentDTO;
+        return DTOMapper.convertToStudentDTO(foundStudent);
     }
 
     @PostMapping

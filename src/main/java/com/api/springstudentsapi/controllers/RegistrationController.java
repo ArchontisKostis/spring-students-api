@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("api/registration")
@@ -31,7 +32,11 @@ public class RegistrationController {
     @GetMapping
     public List<RegistrationDTO> getAllRegistrations() {
         List<Registration> allRegistrations =  this.registrationService.getRegistrations();
-        return DTOMapper.mapToRegistrationDTOList(allRegistrations);
+        Stream<RegistrationDTO> registrationDTOStream =
+                allRegistrations.stream()
+                        .map(registration -> DTOMapper.convertToRegistrationDTO(registration));
+
+        return registrationDTOStream.toList();
     }
     
     @PostMapping(path = "register")
