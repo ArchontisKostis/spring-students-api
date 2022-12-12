@@ -4,7 +4,9 @@ import com.api.springstudentsapi.dto.DTOMapper;
 import com.api.springstudentsapi.dto.TeacherDTO;
 import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.entities.Teacher;
+import com.api.springstudentsapi.entities.Teaching;
 import com.api.springstudentsapi.services.TeacherService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +32,13 @@ public class TeacherController {
     @GetMapping(path = "getTeacher")
     public TeacherDTO getTeacherById(@RequestParam(name = "tid") Long teacherId) {
         Teacher foundTeacher = teacherService.getTeacherById(teacherId);
-        return TeacherDTO.convert(foundTeacher);
+        List<Teaching> teachings = foundTeacher.getTeacherTeachings();
+
+        TeacherDTO teacherDTO = new TeacherDTO();
+        BeanUtils.copyProperties(foundTeacher, teacherDTO);
+        teacherDTO.setTeachingCourses(DTOMapper.mapToTeachingCourseDTOList(teachings));
+
+        return teacherDTO;
     }
 
     @PostMapping

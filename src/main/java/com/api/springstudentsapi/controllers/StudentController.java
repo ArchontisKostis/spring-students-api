@@ -2,8 +2,10 @@ package com.api.springstudentsapi.controllers;
 
 import com.api.springstudentsapi.dto.DTOMapper;
 import com.api.springstudentsapi.dto.StudentDTO;
+import com.api.springstudentsapi.entities.Registration;
 import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.services.StudentService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +31,13 @@ public class StudentController {
     @GetMapping(path = "getStudent")
     public StudentDTO getStudentById(@RequestParam(name = "sid") Long studentId) {
         Student foundStudent = studentService.getStudentById(studentId);
-        return StudentDTO.convert(foundStudent);
+        List<Registration> registrations = foundStudent.getStudentRegistrations();
+
+        StudentDTO studentDTO = new StudentDTO();
+        BeanUtils.copyProperties(foundStudent, studentDTO);
+        studentDTO.setEnrolledCourses(DTOMapper.mapToEnrolledCoursesDTOList(foundStudent.getStudentRegistrations()));
+
+        return studentDTO;
     }
 
     @PostMapping

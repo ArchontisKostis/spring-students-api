@@ -17,9 +17,4 @@ public class StudentDTO {
     private String name;
     @Getter @Setter
     private Collection<EnrolledCourseDTO> enrolledCourses;
-
-    public static StudentDTO convert(Student student) {
-        Collection<EnrolledCourseDTO> studentRegistrations = DTOMapper.mapToEnrolledCoursesDTOList(student.getStudentRegistrations());
-        return new StudentDTO(student.getId(), student.getName(), studentRegistrations);
-    }
 }

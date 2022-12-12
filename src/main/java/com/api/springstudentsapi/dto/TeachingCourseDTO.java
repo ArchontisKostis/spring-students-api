@@ -11,15 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TeachingCourseDTO {
     @Getter @Setter
-    private Long id;
-    @Getter @Setter
-    private String course;
-
-    public static TeachingCourseDTO convert(Teaching teaching) {
-        Course teachingCourse = teaching.getCourse();
-        String courseName = teachingCourse.getName();
-        Long courseId = teachingCourse.getId();
-
-        return new TeachingCourseDTO(courseId, courseName);
-    }
+    private Course course;
 }
