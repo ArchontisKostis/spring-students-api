@@ -3,6 +3,8 @@ package com.api.springstudentsapi.services;
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Teacher;
 import com.api.springstudentsapi.entities.Teaching;
+import com.api.springstudentsapi.repositories.CourseRepository;
+import com.api.springstudentsapi.repositories.TeacherRepository;
 import com.api.springstudentsapi.repositories.TeachingRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,23 +15,28 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collection;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class TeachingServiceTest {
     @Mock
     TeachingRepository teachingRepository;
+    @Mock
+    TeacherRepository teacherRepository;
+    @Mock
+    CourseRepository courseRepository;
     TeachingService classUnderTest;
 
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
         System.out.println("----- Test " + testInfo.getDisplayName() + " Started -----");
-        classUnderTest = new TeachingService(teachingRepository);
+        classUnderTest = new TeachingService(teachingRepository, new TeacherService(teacherRepository), new CourseService(courseRepository));
     }
 
     @AfterEach
@@ -50,8 +57,14 @@ class TeachingServiceTest {
         Teacher givenTeacher = new Teacher(1L, "Alex");
         Course givenCourse = new Course(1L, "JAVA");
 
+        given(teacherRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(givenTeacher));
+
+        given(courseRepository.findById(any(Long.class)))
+                .willReturn(Optional.of(givenCourse));
+
         // When
-        classUnderTest.assignTeacherToCourse(givenTeacher, givenCourse);
+        classUnderTest.assignTeacherToCourse(1L, 1L);
 
         // Then
         // Capture saved Teaching object

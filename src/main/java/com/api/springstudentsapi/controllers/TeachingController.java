@@ -27,8 +27,6 @@ public class TeachingController {
             @RequestParam(name = "tid") Long teacherId,
             @RequestParam(name = "cid") Long courseId
     ) {
-        Teacher teacher = teacherService.getTeacherById(teacherId);
-        Course course = courseService.getCourseById(courseId);
-        teachingService.assignTeacherToCourse(teacher, course);
+        teachingService.assignTeacherToCourse(teacherId, courseId);
     }
 }

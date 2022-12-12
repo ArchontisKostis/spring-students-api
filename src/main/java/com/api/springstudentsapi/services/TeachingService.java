@@ -12,18 +12,25 @@ import java.util.Collection;
 @Service
 public class TeachingService {
     private final TeachingRepository teachingRepository;
+    private final TeacherService teacherService;
+    private final CourseService courseService;
 
     @Autowired
-    public TeachingService(TeachingRepository teachingRepository) {
+    public TeachingService(TeachingRepository teachingRepository, TeacherService teacherService, CourseService courseService) {
         this.teachingRepository = teachingRepository;
+        this.teacherService = teacherService;
+        this.courseService = courseService;
     }
 
     public Collection<Teaching> getTeachings() {
         return this.teachingRepository.findAll();
     }
 
-    public Teaching assignTeacherToCourse(Teacher teacher, Course course){
-        Teaching teaching = new Teaching(teacher, course);
+    public Teaching assignTeacherToCourse(Long teacherId, Long courseId){
+        Teacher foundTeacher = teacherService.getTeacherById(teacherId);
+        Course foundCourse = courseService.getCourseById(courseId);
+
+        Teaching teaching = new Teaching(foundTeacher, foundCourse);
         return teachingRepository.save(teaching);
     }
 }
