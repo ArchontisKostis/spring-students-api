@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("api/students")
@@ -25,7 +26,17 @@ public class StudentController {
     @GetMapping
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentService.getAllStudents();
-        return DTOMapper.mapToStudentDTOList(students);
+        Stream<StudentDTO> studentDTOStream =
+                students.stream()
+                        .map(student -> {
+                            StudentDTO studentDTO = new StudentDTO();
+                            studentDTO.setEnrolledCourses(DTOMapper.mapToEnrolledCoursesDTOList(student.getStudentRegistrations()));
+                            BeanUtils.copyProperties(student, studentDTO);
+
+                            return studentDTO;
+                        });
+
+        return studentDTOStream.toList();
     }
 
     @GetMapping(path = "getStudent")
@@ -35,7 +46,7 @@ public class StudentController {
 
         StudentDTO studentDTO = new StudentDTO();
         BeanUtils.copyProperties(foundStudent, studentDTO);
-        studentDTO.setEnrolledCourses(DTOMapper.mapToEnrolledCoursesDTOList(foundStudent.getStudentRegistrations()));
+        studentDTO.setEnrolledCourses(DTOMapper.mapToEnrolledCoursesDTOList(registrations));
 
         return studentDTO;
     }
