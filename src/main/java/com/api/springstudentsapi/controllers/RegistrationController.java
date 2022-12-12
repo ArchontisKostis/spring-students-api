@@ -33,7 +33,8 @@ public class RegistrationController {
         List<Registration> allRegistrations =  this.registrationService.getRegistrations();
 
         return allRegistrations.stream()
-                .map(registration -> DTOMapper.convertToRegistrationDTO(registration))
+                .map(registration ->
+                        (RegistrationDTO) DTOMapper.convertToDTO(registration, new RegistrationDTO()))
                 .toList();
     }
     

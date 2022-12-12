@@ -9,17 +9,23 @@ import org.springframework.beans.BeanUtils;
 import java.util.List;
 
 public class DTOMapper {
+    public static Object convertToDTO(Object objectToConvert, Object dtoObject) {
+        BeanUtils.copyProperties(objectToConvert, dtoObject);
+        return dtoObject;
+    }
+
     public static TeacherDTO convertToTeacherDTO(Teacher teacher) {
         List<Teaching> teachings = teacher.getTeacherTeachings();
 
         List<TeachingCourseDTO> teachingsDTOs =
                 teachings.stream()
-                        .map(teaching -> convertToTeachingCourseDTO(teaching))
+                        .map(teaching ->
+                                (TeachingCourseDTO) convertToDTO(teaching, new TeachingCourseDTO()))
                         .toList();
 
         TeacherDTO teacherDTO = new TeacherDTO();
-        BeanUtils.copyProperties(teacher, teacherDTO);
         teacherDTO.setTeachingCourses(teachingsDTOs);
+        convertToDTO(teacher, teacherDTO);
 
         return teacherDTO;
     }
@@ -28,35 +34,15 @@ public class DTOMapper {
         List<Registration> registrations = student.getStudentRegistrations();
         List<EnrolledCourseDTO> registrationDTOs =
                 registrations.stream()
-                        .map(registration -> convertToEnrolledCourseDTO(registration))
+                        .map(registration ->
+                                (EnrolledCourseDTO) convertToDTO(registration, new EnrolledCourseDTO()))
                         .toList();
 
         StudentDTO studentDTO = new StudentDTO();
-        BeanUtils.copyProperties(student, studentDTO);
         studentDTO.setEnrolledCourses(registrationDTOs);
+        convertToDTO(student, studentDTO);
 
         return studentDTO;
-    }
-
-    public static RegistrationDTO convertToRegistrationDTO(Registration registration) {
-        RegistrationDTO registrationDTO = new RegistrationDTO();
-        BeanUtils.copyProperties(registration, registrationDTO);
-
-        return registrationDTO;
-    }
-
-    private static TeachingCourseDTO convertToTeachingCourseDTO(Teaching teaching) {
-        TeachingCourseDTO teachingCourseDTO = new TeachingCourseDTO();
-        BeanUtils.copyProperties(teaching, teachingCourseDTO);
-
-        return teachingCourseDTO;
-    }
-
-    private static EnrolledCourseDTO convertToEnrolledCourseDTO(Registration registration) {
-        EnrolledCourseDTO enrolledCourseDTO = new EnrolledCourseDTO();
-        BeanUtils.copyProperties(registration, enrolledCourseDTO);
-
-        return enrolledCourseDTO;
     }
 
     private DTOMapper() {
