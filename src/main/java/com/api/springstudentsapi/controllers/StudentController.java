@@ -23,11 +23,10 @@ public class StudentController {
     @GetMapping
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentService.getAllStudents();
-        Stream<StudentDTO> studentDTOStream =
-                students.stream()
-                        .map(student -> DTOMapper.convertToStudentDTO(student));
 
-        return studentDTOStream.toList();
+        return students.stream()
+                .map(student -> DTOMapper.convertToStudentDTO(student))
+                .toList();
     }
 
     @GetMapping(path = "getStudent")
