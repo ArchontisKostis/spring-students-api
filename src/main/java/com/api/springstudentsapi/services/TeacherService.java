@@ -15,16 +15,12 @@ import java.util.List;
 @Service
 public class TeacherService {
     private final TeacherRepository teacherRepository;
-    private final CourseService courseService;
-    private final StudentService studentService;
-    private final RegistrationRepository registrationRepository;
+    private final RegistrationService registrationService;
 
     @Autowired
-    public TeacherService(TeacherRepository teacherRepository, CourseService courseService, StudentService studentService, RegistrationRepository registrationRepository) {
+    public TeacherService(TeacherRepository teacherRepository, RegistrationService registrationService) {
         this.teacherRepository = teacherRepository;
-        this.courseService = courseService;
-        this.studentService = studentService;
-        this.registrationRepository = registrationRepository;
+        this.registrationService = registrationService;
     }
 
     public List<Teacher> getAllTeachers() {
@@ -50,12 +46,16 @@ public class TeacherService {
         this.teacherRepository.save(teacherToUpdate);
     }
 
-    public void setGradeToStudent(Long teacherId, Long studentId, Long courseId, int grade) {
-        Teacher teacher = getTeacherById(teacherId);
-        Student student = studentService.getStudentById(studentId);
-        Course course = courseService.getCourseById(courseId);
+    public void setGradeToStudent(
+            Long teacherId,
+            Long studentId,
+            Long courseId,
+            int grade)
+    {
+        Teacher foundTeacher = this.getTeacherById(teacherId);
+        Registration foundRegistration = registrationService.getRegistrationsByStudentAndCourseId(studentId, courseId);
 
-        Registration updatedStudentRegistration = teacher.setGradeToStudent(student, course, grade);
-        registrationRepository.save(updatedStudentRegistration);
+        foundRegistration = foundTeacher.setGradeToStudent(foundRegistration, grade);
+        registrationService.updateStudentRegistration(foundRegistration);
     }
 }

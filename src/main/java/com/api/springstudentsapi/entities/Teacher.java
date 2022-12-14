@@ -3,6 +3,7 @@ package com.api.springstudentsapi.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,13 +35,14 @@ public class Teacher {
     public Teacher(Long id, String name) {
         this.id = id;
         this.name = name;
+        this.teacherTeachings = new ArrayList<>();
     }
 
-    public Registration setGradeToStudent(Student student, Course course, int grade) {
-        if(!student.isEnrolledToCourse(course) || !this.canGradeCourse(course))
-            throw new RuntimeException("setGradeToStudent()");
+    public Registration setGradeToStudent(Registration studentRegistration, int grade) {
+        Course courseToGrade = studentRegistration.getCourse();
+        if (!this.isTeachingCourse(courseToGrade))
+            throw  new RuntimeException("Cannot grade this course because you are not teaching it");
 
-        Registration studentRegistration = student.getRegistrationByCourse(course);
         studentRegistration.setGrade(grade);
         return studentRegistration;
     }
@@ -50,11 +52,5 @@ public class Teacher {
                 .anyMatch(teaching -> teaching.getCourse() == course);
 
         return courseExists;
-    }
-
-    public boolean canGradeCourse(Course course) {
-        if (this.isTeachingCourse(course))
-            return true;
-        return false;
     }
 }

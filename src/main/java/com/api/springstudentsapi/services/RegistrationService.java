@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RegistrationService {
@@ -32,5 +33,20 @@ public class RegistrationService {
 
         Registration registration = new Registration(studentToRegister, courseToEnroll);
         return registrationRepository.save(registration);
+    }
+
+    public Registration getRegistrationsByStudentAndCourseId(Long studentId, Long courseId) {
+        Optional<Registration> registration =
+                this.registrationRepository.getRegistrationByStudentAndCourseId(studentId, courseId)
+                .stream().findFirst();
+
+        if(registration.isEmpty())
+            throw new RuntimeException("Registration does not exist.");
+
+        return registration.get();
+    }
+
+    public void updateStudentRegistration(Registration registration) {
+        registrationRepository.save(registration);
     }
 }
