@@ -4,6 +4,7 @@ import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.entities.Teacher;
 import com.api.springstudentsapi.entities.Teaching;
 import com.api.springstudentsapi.repositories.CourseRepository;
+import com.api.springstudentsapi.repositories.RegistrationRepository;
 import com.api.springstudentsapi.repositories.TeacherRepository;
 import com.api.springstudentsapi.repositories.TeachingRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -30,13 +31,16 @@ class TeachingServiceTest {
     TeacherRepository teacherRepository;
     @Mock
     CourseRepository courseRepository;
+    @Mock
+    RegistrationRepository registrationRepository;
+    @Mock
     TeachingService classUnderTest;
 
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
         System.out.println("----- Test " + testInfo.getDisplayName() + " Started -----");
-        classUnderTest = new TeachingService(teachingRepository, new TeacherService(teacherRepository, courseService, studentService, registrationRepository), new CourseService(courseRepository));
+        //classUnderTest = new TeachingService(teachingRepository, new TeacherService(teacherRepository, new RegistrationService(registrationRepository)), new CourseService(courseRepository));
     }
 
     @AfterEach
