@@ -36,7 +36,7 @@ class TeachingServiceTest {
     @BeforeEach
     void setUp(TestInfo testInfo) {
         System.out.println("----- Test " + testInfo.getDisplayName() + " Started -----");
-        classUnderTest = new TeachingService(teachingRepository, new TeacherService(teacherRepository), new CourseService(courseRepository));
+        classUnderTest = new TeachingService(teachingRepository, new TeacherService(teacherRepository, courseService, studentService, registrationRepository), new CourseService(courseRepository));
     }
 
     @AfterEach

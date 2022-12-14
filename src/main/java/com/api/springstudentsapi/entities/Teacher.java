@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @ToString
 @AllArgsConstructor
@@ -33,5 +34,27 @@ public class Teacher {
     public Teacher(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Registration setGradeToStudent(Student student, Course course, int grade) {
+        if(!student.isEnrolledToCourse(course) || !this.canGradeCourse(course))
+            throw new RuntimeException("setGradeToStudent()");
+
+        Registration studentRegistration = student.getRegistrationByCourse(course);
+        studentRegistration.setGrade(grade);
+        return studentRegistration;
+    }
+
+    public boolean isTeachingCourse(Course course) {
+        boolean courseExists = this.teacherTeachings.stream()
+                .anyMatch(teaching -> teaching.getCourse() == course);
+
+        return courseExists;
+    }
+
+    public boolean canGradeCourse(Course course) {
+        if (this.isTeachingCourse(course))
+            return true;
+        return false;
     }
 }
