@@ -1,13 +1,16 @@
 package com.api.springstudentsapi.controllers;
 
+import com.api.springstudentsapi.dto.CourseDTO;
 import com.api.springstudentsapi.entities.Course;
 import com.api.springstudentsapi.services.CourseService;
 import com.api.springstudentsapi.services.StudentService;
 import com.api.springstudentsapi.services.TeacherService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/courses")
@@ -21,8 +24,15 @@ public class CourseController {
     }
 
     @GetMapping
-    public Collection<Course> getAllCourses() {
-        return this.courseService.getAllCourses();
+    public List<CourseDTO> getAllCourses() {
+        return this.courseService.getAllCourses()
+                .stream()
+                .map(course -> {
+                    CourseDTO courseDTO = new CourseDTO();
+                    BeanUtils.copyProperties(course, courseDTO);
+                    return courseDTO;
+                })
+                .toList();
     }
 
     @GetMapping("course")
