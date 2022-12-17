@@ -14,7 +14,11 @@ public class DTOMapper {
 
         List<TeachingCourseDTO> teachingsDTOs =
                 teachings.stream()
-                        .map(teaching -> convertToTeachingCourseDTO(teaching))
+                        .map(teaching -> {
+                            TeachingCourseDTO teachingCourseDTO = new TeachingCourseDTO();
+                            BeanUtils.copyProperties(teaching, teachingCourseDTO);
+                            return teachingCourseDTO;
+                        })
                         .toList();
 
         TeacherDTO teacherDTO = new TeacherDTO();
@@ -28,7 +32,11 @@ public class DTOMapper {
         List<Registration> registrations = student.getStudentRegistrations();
         List<EnrolledCourseDTO> registrationDTOs =
                 registrations.stream()
-                        .map(registration -> convertToEnrolledCourseDTO(registration))
+                        .map(registration -> {
+                            EnrolledCourseDTO enrolledCourseDTO = new EnrolledCourseDTO();
+                            BeanUtils.copyProperties(registration, enrolledCourseDTO);
+                            return  enrolledCourseDTO;
+                        })
                         .toList();
 
         StudentDTO studentDTO = new StudentDTO();
@@ -43,20 +51,6 @@ public class DTOMapper {
         BeanUtils.copyProperties(registration, registrationDTO);
 
         return registrationDTO;
-    }
-
-    private static TeachingCourseDTO convertToTeachingCourseDTO(Teaching teaching) {
-        TeachingCourseDTO teachingCourseDTO = new TeachingCourseDTO();
-        BeanUtils.copyProperties(teaching, teachingCourseDTO);
-
-        return teachingCourseDTO;
-    }
-
-    private static EnrolledCourseDTO convertToEnrolledCourseDTO(Registration registration) {
-        EnrolledCourseDTO enrolledCourseDTO = new EnrolledCourseDTO();
-        BeanUtils.copyProperties(registration, enrolledCourseDTO);
-
-        return enrolledCourseDTO;
     }
 
     private DTOMapper() {
