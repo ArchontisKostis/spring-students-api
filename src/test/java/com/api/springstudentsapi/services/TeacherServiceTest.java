@@ -2,6 +2,9 @@ package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Teacher;
 import com.api.springstudentsapi.exceptions.teacher.TeacherNotFoundException;
+import com.api.springstudentsapi.repositories.CourseRepository;
+import com.api.springstudentsapi.repositories.RegistrationRepository;
+import com.api.springstudentsapi.repositories.StudentRepository;
 import com.api.springstudentsapi.repositories.TeacherRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,12 +26,19 @@ import static org.mockito.Mockito.verify;
 class TeacherServiceTest {
     @Mock
     TeacherRepository teacherRepository;
+    @Mock
+    RegistrationRepository registrationRepository;
+    @Mock
+    StudentRepository studentRepository;
+    @Mock
+    CourseRepository courseRepository;
     TeacherService classUnderTest;
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
         System.out.println("----- Test " + testInfo.getDisplayName() + " Started -----");
-        classUnderTest = new TeacherService(teacherRepository, courseService, studentService, registrationRepository);
+        RegistrationService registrationService = new RegistrationService(registrationRepository, new StudentService(studentRepository), new CourseService(courseRepository));
+        classUnderTest = new TeacherService(teacherRepository, registrationService);
     }
 
     @AfterEach

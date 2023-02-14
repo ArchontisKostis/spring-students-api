@@ -17,7 +17,9 @@ public class RegistrationService {
     private final CourseService courseService;
 
     @Autowired
-    public RegistrationService(RegistrationRepository registrationRepository, StudentService studentService, CourseService courseService) {
+    public RegistrationService(RegistrationRepository registrationRepository,
+                               StudentService studentService,
+                               CourseService courseService) {
         this.registrationRepository = registrationRepository;
         this.studentService = studentService;
         this.courseService = courseService;
