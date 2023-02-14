@@ -1,6 +1,7 @@
 package com.api.springstudentsapi.services;
 
 import com.api.springstudentsapi.entities.Course;
+import com.api.springstudentsapi.entities.Student;
 import com.api.springstudentsapi.entities.Teacher;
 import com.api.springstudentsapi.entities.Teaching;
 import com.api.springstudentsapi.repositories.TeachingRepository;

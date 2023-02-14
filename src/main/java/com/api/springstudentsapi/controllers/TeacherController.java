@@ -53,4 +53,14 @@ public class TeacherController {
         this.teacherService.updateTeacher(teacherId, newName);
     }
 
+    @PutMapping(path = "setGrade")
+    public void setGradeToStudent(
+            @RequestParam(name = "tid") Long teacherId,
+            @RequestParam(name = "sid") Long studentId,
+            @RequestParam(name = "cid") Long courseId,
+            @RequestParam(name = "grade") int grade
+    ){
+        teacherService.setGradeToStudent(teacherId, studentId, courseId, grade);
+    }
+
 }
